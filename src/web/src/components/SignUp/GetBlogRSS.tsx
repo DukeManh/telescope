@@ -18,14 +18,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const WelcomeMessage = () => {
+const GetBlogRSS = () => {
   const classes = useStyles();
   return (
     <>
       <div className={classes.container}>
-        <h1>MESSAGE 1</h1>
+        <h1>MESSAGE 3</h1>
         <h2>
-          YOU NEED A GITHUB AND A BLOG. AND SO ON.
+          GET BLOG RSS
           <br />
         </h2>
       </div>
@@ -33,4 +33,4 @@ const WelcomeMessage = () => {
   );
 };
 
-export default WelcomeMessage;
+export default GetBlogRSS;
