@@ -1,4 +1,5 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,8 +16,17 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '50vh',
       background: 'white',
     },
+    inputContainer: {
+      width: '50%',
+      marginLeft: '28%',
+    },
   })
 );
+
+// type signUpFields = {
+//   fields: Function;
+//   setFields: Function;
+// };
 
 const GetGitHub = () => {
   const classes = useStyles();
@@ -28,6 +38,9 @@ const GetGitHub = () => {
           ENTER GITHUB AND VALIDATE.
           <br />
         </h2>
+        <div className={classes.inputContainer}>
+          <TextField fullWidth id="standard-basic" label="Standard" />
+        </div>
       </div>
     </>
   );
