@@ -24,17 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type signUpFields = {
-  setFields: Function;
-};
-
-const GetGitHub = (setFields: signUpFields) => {
+const GetGitHub = () => {
   const classes = useStyles();
   const [gitHub, setGitHub] = useState('');
-
-  // const submitHandler = (event: FormEvent) => {
-  //   setFields({ gitHub });
-  // };
 
   return (
     <>
@@ -45,13 +37,7 @@ const GetGitHub = (setFields: signUpFields) => {
           <br />
         </h2>
         <div className={classes.inputContainer}>
-          <TextField
-            fullWidth
-            id="standard-basic"
-            label="Standard"
-            onChange={(e) => setGitHub(e.target.value)}
-            // onSubmit={submitHandler}
-          />
+          <TextField fullWidth id="standard-basic" label="Standard" />
           <p>{gitHub}</p>
         </div>
       </div>

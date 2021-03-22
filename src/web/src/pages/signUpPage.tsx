@@ -13,12 +13,20 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       padding: '0',
-      margin: '0 10vw',
+      margin: '0',
       backgroundColor: theme.palette.background.default,
-      width: 'calc(100% - 20vw)',
+      width: '100%',
       display: 'grid',
       justifyItems: 'center',
+      fontFamily: 'Spartan',
     },
+    title: {
+      marginTop: '1em',
+      color: theme.palette.text.secondary,
+      fontSize: '35px',
+    },
+    infoContainer: {},
+    buttonsContainer: {},
     stepper: {
       width: '50%',
       height: '150px',
@@ -26,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       padding: '10px',
-      margin: '5px 0',
+      margin: '5px 10px',
       background: '#DDDBCB',
     },
   })
@@ -49,30 +57,34 @@ const SignUpPage = () => {
   };
 
   return (
-    <>
-      <div className={classes.root}>
+    <div className={classes.root}>
+      <h1 className={classes.title}>Create your Telescope Account</h1>
+      <div className={classes.infoContainer}>
         {activeStep === 0 && <FirstMessage />}
-        {activeStep === 1 && <GetGitHub setFields={setUserInfo} />}
+        {activeStep === 1 && <GetGitHub />}
         {activeStep === 2 && <GetBlogRSS />}
         {activeStep === 3 && <FinalMessage />}
-        <Button className={classes.button} onClick={handleNext}>
-          {activeStep < 3 ? 'Next' : 'Finish'}
-        </Button>
+      </div>
+
+      <div className={classes.buttonsContainer}>
         <Button className={classes.button} onClick={handlePrevious}>
           Previous
         </Button>
-        <div className={classes.stepper}>
-          <Stepper activeStep={activeStep} alternativeLabel>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <p>{userInfo}</p>
-        </div>
+        <Button className={classes.button} onClick={handleNext}>
+          {activeStep < 3 ? 'Next' : 'Finish'}
+        </Button>
       </div>
-    </>
+
+      <div className={classes.stepper}>
+        <Stepper activeStep={activeStep} alternativeLabel>
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      </div>
+    </div>
   );
 };
 
