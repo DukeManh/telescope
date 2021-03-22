@@ -35,7 +35,9 @@ const useStyles = makeStyles((theme: Theme) =>
 const SignUpPage = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState({ email: '', name: '' });
+  const [userGitHub, setUserGitHub] = useState('');
+  const [userRSS, setUserRSS] = useState('');
   const steps = ['Start', 'Get GitHub', 'Get Blog', 'End'];
 
   const handleNext = () => {

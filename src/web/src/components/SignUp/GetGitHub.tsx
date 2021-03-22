@@ -32,9 +32,9 @@ const GetGitHub = (setFields: signUpFields) => {
   const classes = useStyles();
   const [gitHub, setGitHub] = useState('');
 
-  const submitHandler = (event: FormEvent) => {
-    setFields({ gitHub });
-  };
+  // const submitHandler = (event: FormEvent) => {
+  //   setFields({ gitHub });
+  // };
 
   return (
     <>
@@ -50,7 +50,7 @@ const GetGitHub = (setFields: signUpFields) => {
             id="standard-basic"
             label="Standard"
             onChange={(e) => setGitHub(e.target.value)}
-            onSubmit={submitHandler}
+            // onSubmit={submitHandler}
           />
           <p>{gitHub}</p>
         </div>
