@@ -1,5 +1,6 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,13 +24,18 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-// type signUpFields = {
-//   fields: Function;
-//   setFields: Function;
-// };
+type signUpFields = {
+  setFields: Function;
+};
 
-const GetGitHub = () => {
+const GetGitHub = (setFields: signUpFields) => {
   const classes = useStyles();
+  const [gitHub, setGitHub] = useState('');
+
+  const submitHandler = (event: FormEvent) => {
+    setFields({ gitHub });
+  };
+
   return (
     <>
       <div className={classes.container}>
@@ -39,7 +45,14 @@ const GetGitHub = () => {
           <br />
         </h2>
         <div className={classes.inputContainer}>
-          <TextField fullWidth id="standard-basic" label="Standard" />
+          <TextField
+            fullWidth
+            id="standard-basic"
+            label="Standard"
+            onChange={(e) => setGitHub(e.target.value)}
+            onSubmit={submitHandler}
+          />
+          <p>{gitHub}</p>
         </div>
       </div>
     </>

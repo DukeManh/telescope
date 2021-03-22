@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const SignUpPage = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
+  const [userInfo, setUserInfo] = useState();
   const steps = ['Start', 'Get GitHub', 'Get Blog', 'End'];
 
   const handleNext = () => {
@@ -49,7 +50,7 @@ const SignUpPage = () => {
     <>
       <div className={classes.root}>
         {activeStep === 0 && <FirstMessage />}
-        {activeStep === 1 && <GetGitHub />}
+        {activeStep === 1 && <GetGitHub setFields={setUserInfo} />}
         {activeStep === 2 && <GetBlogRSS />}
         {activeStep === 3 && <FinalMessage />}
         <Button className={classes.button} onClick={handleNext}>
@@ -66,6 +67,7 @@ const SignUpPage = () => {
               </Step>
             ))}
           </Stepper>
+          <p>{userInfo}</p>
         </div>
       </div>
     </>
