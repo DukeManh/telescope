@@ -67,12 +67,21 @@ const SignUpPage = () => {
       </div>
 
       <div className={classes.buttonsContainer}>
-        <Button className={classes.button} onClick={handlePrevious}>
-          Previous
-        </Button>
-        <Button className={classes.button} onClick={handleNext}>
-          {activeStep < 3 ? 'Next' : 'Finish'}
-        </Button>
+        {activeStep === 0 ? (
+          <Button className={classes.button} onClick={handleNext}>
+            Start
+          </Button>
+        ) : (
+          <>
+            <Button className={classes.button} onClick={handlePrevious}>
+              Previous
+            </Button>
+
+            <Button className={classes.button} onClick={handleNext}>
+              {activeStep < 3 ? 'Next' : 'Finish'}
+            </Button>
+          </>
+        )}
       </div>
 
       <div className={classes.stepper}>
