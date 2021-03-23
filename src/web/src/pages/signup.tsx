@@ -49,6 +49,7 @@ const SignUpPage = () => {
   const [userInfo, setUserInfo] = useState({ email: '', name: '' });
   const [userGitHub, setUserGitHub] = useState('');
   const [userRSS, setUserRSS] = useState({});
+  const [userAgree, setUserAgree] = useState(0);
   const steps = ['Start', 'Get GitHub', 'Get Blog', 'End'];
 
   const handleNext = () => {
