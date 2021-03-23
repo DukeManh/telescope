@@ -25,15 +25,18 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.text.secondary,
       fontSize: '35px',
     },
-    infoContainer: {},
+    infoContainer: {
+      width: '100%',
+      height: '70vh',
+    },
     buttonsContainer: {},
     stepper: {
-      width: '50%',
-      height: '150px',
+      width: '80%',
       margin: '5px 0',
     },
     button: {
-      padding: '10px',
+      fontSize: '1.3em',
+      padding: '1.5em',
       margin: '5px 10px',
       background: '#DDDBCB',
     },
@@ -45,7 +48,7 @@ const SignUpPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [userInfo, setUserInfo] = useState({ email: '', name: '' });
   const [userGitHub, setUserGitHub] = useState('');
-  const [userRSS, setUserRSS] = useState('');
+  const [userRSS, setUserRSS] = useState({});
   const steps = ['Start', 'Get GitHub', 'Get Blog', 'End'];
 
   const handleNext = () => {
