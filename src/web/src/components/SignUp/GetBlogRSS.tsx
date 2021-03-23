@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
     },
     inputsContainer: {
-      width: '100%',
+      width: '90%',
     },
     inputs: {
       margin: '1em 0',
@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.5em',
     },
     formControlLabel: {
+      fontSize: '1.5em',
+    },
+    helpMessage: {
       fontSize: '1.5em',
     },
   })
@@ -87,19 +90,36 @@ const GetBlogRSS = () => {
             />
           </div>
           <div className={classes.infoContainer}>
+            {/* Error and checked must be set */}
             <FormControl required error={null} component="fieldset">
               <FormGroup>
                 {rssExample.map((rss) => (
                   <FormControlLabel
                     key={rss}
-                    control={<Checkbox checked={null} name={rss} onChange={null} />}
+                    control={<Checkbox checked name={rss} onChange={null} />}
                     label={<h1 className={classes.formControlLabel}>{rss}</h1>}
                   />
                 ))}
               </FormGroup>
-              <FormHelperText>You must select at least one RSS</FormHelperText>
+              <FormHelperText className={classes.helpMessage}>
+                You must select at least one RSS
+              </FormHelperText>
             </FormControl>
           </div>
+        </div>
+        <div>
+          <FormControl required error={null} component="fieldset">
+            <FormLabel component="legend" className={classes.formLabel}>
+              I declare that I’m the owner and the maintainer of the Blog account provided:
+            </FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox checked={false} name="agree" onChange={null} />}
+                label={<h1 className={classes.formControlLabel}>Yes</h1>}
+              />
+            </FormGroup>
+            {/* {error && <FormHelperText>Field Required.</FormHelperText>} */}
+          </FormControl>
         </div>
       </div>
     </div>
