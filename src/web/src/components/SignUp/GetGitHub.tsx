@@ -1,6 +1,7 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { useState } from 'react';
+import PostAvatar from '../Posts/PostAvatar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -11,15 +12,32 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
     },
     container: {
+      display: 'grid',
+      gridTemplateAreas: '1fr',
       textAlign: 'center',
+      justifyItems: 'center',
+      alignItems: 'center',
       color: theme.palette.text.primary,
-      width: '50vw',
+      width: '100%',
       height: '50vh',
-      background: 'white',
+      backgroundColor: 'yellow',
     },
-    inputContainer: {
-      width: '50%',
-      marginLeft: '28%',
+    infoContainer: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      textAlign: 'center',
+      justifyItems: 'center',
+      alignItems: 'center',
+    },
+    inputsContainer: {
+      width: '100%',
+    },
+    avatarPreview: {
+      display: 'grid',
+      gridTemplateColumns: '1fr',
+      textAlign: 'center',
+      justifyItems: 'center',
+      alignItems: 'center',
     },
   })
 );
@@ -27,21 +45,30 @@ const useStyles = makeStyles((theme: Theme) =>
 const GetGitHub = () => {
   const classes = useStyles();
   const [gitHub, setGitHub] = useState('');
+  const [displayName, setDisplayName] = useState('');
 
   return (
-    <>
+    <div className={classes.root}>
       <div className={classes.container}>
-        <h1>MESSAGE 2</h1>
+        <h1>GitHub and Display Name</h1>
+        <h2>Enter your GitHub user name and your display name.</h2>
         <h2>
-          ENTER GITHUB AND VALIDATE.
-          <br />
+          Your display name will be your name on Telescope System.
+          <br /> It will be displayed in all of your posts and interactions with other users inside
+          Telescope’s ecosystem.{' '}
         </h2>
-        <div className={classes.inputContainer}>
-          <TextField fullWidth id="standard-basic" label="Standard" />
-          <p>{gitHub}</p>
+        <div className={classes.infoContainer}>
+          <div className={classes.inputsContainer}>
+            <TextField fullWidth id="standard-basic" label="GitHub Username" />
+            <TextField fullWidth id="standard-basic" label="Display Name" />
+          </div>
+          <div className={classes.avatarPreview}>
+            <h1>Avatar Preview</h1>
+            <PostAvatar name={displayName} />
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
