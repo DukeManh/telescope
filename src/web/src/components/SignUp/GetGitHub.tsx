@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.text.primary,
       width: '100%',
       height: '50vh',
-      backgroundColor: 'yellow',
+      // backgroundColor: 'yellow',
     },
     infoContainer: {
       display: 'grid',
@@ -47,7 +47,19 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyItems: 'center',
       alignItems: 'center',
     },
-    formLabel: {},
+    formInput: {
+      marginTop: '0.5em',
+      fontSize: '30px',
+    },
+    formInputLabel: {
+      fontSize: '30px',
+    },
+    formLabel: {
+      fontSize: '20px',
+    },
+    formControlLabel: {
+      fontSize: '20px',
+    },
   })
 );
 
@@ -78,7 +90,22 @@ const GetGitHub = () => {
 
         <div className={classes.infoContainer}>
           <div className={classes.inputsContainer}>
-            <TextField fullWidth id="standard-basic" label="GitHub Username" />
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="GitHub Username"
+              // inputProps={{ style: { fontSize: 40 } }}
+              InputProps={{
+                classes: {
+                  input: classes.formInput,
+                },
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.formInputLabel,
+                },
+              }}
+            />
             <TextField fullWidth id="standard-basic" label="Display Name" />
           </div>
 
@@ -96,7 +123,7 @@ const GetGitHub = () => {
           <FormGroup>
             <FormControlLabel
               control={<Checkbox checked={agree} name="agree" onChange={handleChange} />}
-              label="Yes"
+              label={<h1 className={classes.formControlLabel}>Yes</h1>}
             />
           </FormGroup>
           {error && <FormHelperText>Field Required.</FormHelperText>}
