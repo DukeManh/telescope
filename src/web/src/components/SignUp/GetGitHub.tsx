@@ -57,6 +57,7 @@ const GetGitHub = () => {
     agree: false,
   });
 
+  // lock the person here until no error exist.
   const error = ['agree'].filter((v) => v).length !== 1;
 
   const handleChange = () => {};
