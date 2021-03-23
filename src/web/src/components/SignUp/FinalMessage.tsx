@@ -1,4 +1,5 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import Spinner from '../Spinner';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -9,27 +10,33 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
     },
     container: {
+      display: 'grid',
+      gridTemplateAreas: '1fr',
       textAlign: 'center',
+      justifyItems: 'center',
+      alignItems: 'center',
       color: theme.palette.text.primary,
-      width: '50vw',
+      width: '100%',
       height: '50vh',
-      background: 'white',
+      // backgroundColor: 'yellow',
     },
   })
 );
 
 const FinalMessage = () => {
   const classes = useStyles();
+  const loading = false;
   return (
-    <>
-      <div className={classes.container}>
-        <h1>MESSAGE 4</h1>
-        <h2>
-          WELCOME TO TELESCOPE
-          <br />
-        </h2>
-      </div>
-    </>
+    <div className={classes.container}>
+      {loading ? (
+        <>
+          <h1>Processing your information.</h1>
+          <Spinner />
+        </>
+      ) : (
+        <h2>WELCOME TO TELESCOPE</h2>
+      )}
+    </div>
   );
 };
 

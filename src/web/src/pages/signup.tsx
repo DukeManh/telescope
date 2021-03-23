@@ -4,6 +4,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import { useState } from 'react';
+import Link from 'next/link';
 import FirstMessage from '../components/SignUp/WelcomeMessage';
 import GetGitHub from '../components/SignUp/GetGitHub';
 import GetBlogRSS from '../components/SignUp/GetBlogRSS';
@@ -77,13 +78,22 @@ const SignUpPage = () => {
           </Button>
         ) : (
           <>
-            <Button className={classes.button} onClick={handlePrevious}>
-              Previous
-            </Button>
-
-            <Button className={classes.button} onClick={handleNext}>
-              {activeStep < 3 ? 'Next' : 'Finish'}
-            </Button>
+            {activeStep <= 2 ? (
+              <>
+                <Button className={classes.button} onClick={handlePrevious}>
+                  Previous
+                </Button>
+                <Button className={classes.button} onClick={handleNext}>
+                  {activeStep < 2 ? 'Next' : 'Finish'}
+                </Button>
+              </>
+            ) : (
+              <Button className={classes.button} onClick={handleNext}>
+                <Link href="/" passHref>
+                  HOME
+                </Link>
+              </Button>
+            )}
           </>
         )}
       </div>
