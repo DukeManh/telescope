@@ -47,18 +47,21 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyItems: 'center',
       alignItems: 'center',
     },
+    inputs: {
+      margin: '1em 0',
+    },
     formInput: {
-      marginTop: '0.5em',
-      fontSize: '30px',
+      marginTop: '.2em',
+      fontSize: '1.5em',
     },
     formInputLabel: {
-      fontSize: '30px',
+      fontSize: '2em',
     },
     formLabel: {
-      fontSize: '20px',
+      fontSize: '1.5em',
     },
     formControlLabel: {
-      fontSize: '20px',
+      fontSize: '1.5em',
     },
   })
 );
@@ -94,7 +97,7 @@ const GetGitHub = () => {
               fullWidth
               id="standard-basic"
               label="GitHub Username"
-              // inputProps={{ style: { fontSize: 40 } }}
+              className={classes.inputs}
               InputProps={{
                 classes: {
                   input: classes.formInput,
@@ -106,7 +109,22 @@ const GetGitHub = () => {
                 },
               }}
             />
-            <TextField fullWidth id="standard-basic" label="Display Name" />
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="Display Name"
+              className={classes.inputs}
+              InputProps={{
+                classes: {
+                  input: classes.formInput,
+                },
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.formInputLabel,
+                },
+              }}
+            />
           </div>
 
           <div className={classes.avatarPreview}>
@@ -118,7 +136,7 @@ const GetGitHub = () => {
         </div>
         <FormControl required error={error} component="fieldset">
           <FormLabel component="legend" className={classes.formLabel}>
-            I declare that I’m the owner and the maintainer of the GitHub account provided:{' '}
+            I declare that I’m the owner and the maintainer of the GitHub account provided:
           </FormLabel>
           <FormGroup>
             <FormControlLabel
