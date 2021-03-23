@@ -69,7 +69,6 @@ const GetBlogRSS = () => {
           Please enter your personal blog URL then select the RSS that you want to use in Telescope
           ecosystem.
         </h2>
-        <h3>You can add more than one blog.</h3>
         <div className={classes.infoContainer}>
           <div className={classes.inputsContainer}>
             <TextField
