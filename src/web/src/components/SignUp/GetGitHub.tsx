@@ -1,6 +1,14 @@
+import { useState } from 'react';
+
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import { useState } from 'react';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Checkbox from '@material-ui/core/Checkbox';
+
 import PostAvatar from '../Posts/PostAvatar';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -39,13 +47,21 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyItems: 'center',
       alignItems: 'center',
     },
+    formLabel: {},
   })
 );
 
 const GetGitHub = () => {
   const classes = useStyles();
-  const [gitHub, setGitHub] = useState('');
-  const [displayName, setDisplayName] = useState('');
+  const [userAgree, setUserAgree] = useState({
+    agree: false,
+  });
+
+  const error = ['agree'].filter((v) => v).length !== 1;
+
+  const handleChange = () => {};
+
+  const { agree } = userAgree;
 
   return (
     <div className={classes.root}>
@@ -57,16 +73,32 @@ const GetGitHub = () => {
           <br /> It will be displayed in all of your posts and interactions with other users inside
           Telescope’s ecosystem.{' '}
         </h2>
+
         <div className={classes.infoContainer}>
           <div className={classes.inputsContainer}>
             <TextField fullWidth id="standard-basic" label="GitHub Username" />
             <TextField fullWidth id="standard-basic" label="Display Name" />
           </div>
+
           <div className={classes.avatarPreview}>
             <h1>Avatar Preview</h1>
-            <PostAvatar name={displayName} />
+            {/* DISPLAY THE DISPLAY NAME */}
+            {/* <PostAvatar name={displayName} /> */}
+            <PostAvatar name="" />
           </div>
         </div>
+        <FormControl required error={error} component="fieldset">
+          <FormLabel component="legend" className={classes.formLabel}>
+            I declare that I’m the owner and the maintainer of the GitHub account provided:{' '}
+          </FormLabel>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox checked={agree} name="agree" onChange={handleChange} />}
+              label="Yes"
+            />
+          </FormGroup>
+          {error && <FormHelperText>Field Required.</FormHelperText>}
+        </FormControl>
       </div>
     </div>
   );
