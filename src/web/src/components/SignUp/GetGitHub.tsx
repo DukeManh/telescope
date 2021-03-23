@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const GetGitHub = () => {
   const classes = useStyles();
+  // I think this state should be on the parent like the others. not sure. it's up to you Duc.
   const [userAgree, setUserAgree] = useState({
     agree: false,
   });
