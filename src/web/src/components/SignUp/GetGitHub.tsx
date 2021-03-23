@@ -131,7 +131,7 @@ const GetGitHub = () => {
             <h1>Avatar Preview</h1>
             {/* DISPLAY THE DISPLAY NAME */}
             {/* <PostAvatar name={displayName} /> */}
-            <PostAvatar name="" />
+            <PostAvatar name="" postURL="" />
           </div>
         </div>
         <FormControl required error={error} component="fieldset">
