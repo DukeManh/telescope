@@ -1,6 +1,5 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -81,7 +80,7 @@ const GetBlogRSS = ({ handleChange, agreement }: GetBlogRssProps) => {
             <TextField
               fullWidth
               id="standard-basic"
-              label="Enter blog URL"
+              label="Blog URL"
               className={classes.inputs}
               InputProps={{
                 classes: {
@@ -114,9 +113,6 @@ const GetBlogRSS = ({ handleChange, agreement }: GetBlogRssProps) => {
         </div>
         <div>
           <FormControl required component="fieldset">
-            <FormLabel component="legend" className={classes.formLabel}>
-              I declare that I’m the owner and the maintainer of the Blog account provided:
-            </FormLabel>
             <FormGroup>
               <FormControlLabel
                 control={
@@ -126,10 +122,13 @@ const GetBlogRSS = ({ handleChange, agreement }: GetBlogRssProps) => {
                     onChange={(e) => handleChange(e)}
                   />
                 }
-                label={<h1 className={classes.formControlLabel}>Yes</h1>}
+                label={
+                  <h1 className={classes.formControlLabel}>
+                    I declare that I’m the owner and the maintainer of this Blog*
+                  </h1>
+                }
               />
             </FormGroup>
-            <FormHelperText>Field Required.</FormHelperText>
           </FormControl>
         </div>
       </div>
