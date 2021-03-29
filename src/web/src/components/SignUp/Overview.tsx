@@ -1,5 +1,6 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import useAuth from '../../hooks/use-auth';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,6 +56,19 @@ const useStyles = makeStyles((theme: Theme) =>
     text: {
       fontSize: '1.5em',
     },
+    inputs: {
+      margin: '1em 0',
+    },
+    formInput: {
+      marginTop: '.2em',
+      fontSize: '1.5em',
+    },
+    formInputLabel: {
+      fontSize: '1.5em',
+    },
+    formLabel: {
+      fontSize: '1em',
+    },
   })
 );
 
@@ -68,21 +82,46 @@ const Overview = () => {
     <div className={classes.root}>
       <div className={classes.container}>
         <div className={classes.welcomeMessage}>
-          <h1>Hello {user.name}, let’s create your Telescope Account</h1>
+          <h2>
+            Telescope requires a number of pieces of user information, for example a GitHub account,
+            a Blog, and user details.
+          </h2>
         </div>
         <div className={classes.userInfo}>
-          <h2 className={classes.userInfoLabel}>Follow the information that we already have:</h2>
-          <h2>
-            <b>Full Name: </b>
-            {user.name}
-          </h2>
-          <h2>
-            <b>Email: </b>
-            {user.email}
-          </h2>
+          <h2 className={classes.userInfoLabel}>Here&apos;s the user info that we already have:</h2>
+          <div>
+            <TextField
+              fullWidth
+              placeholder={user?.name || ''}
+              id="displayName"
+              label="Display Name"
+              className={classes.inputs}
+              InputProps={{
+                classes: {
+                  input: classes.formInput,
+                },
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.formInputLabel,
+                },
+              }}
+            />
+            <TextField
+              value={user?.email || ''}
+              disabled
+              fullWidth
+              id="email"
+              className={classes.inputs}
+              InputProps={{
+                classes: {
+                  input: classes.formInput,
+                },
+              }}
+            />
+          </div>
         </div>
         <div className={classes.telescopeInfo}>
-          <h2>Telescope system requires all users to have a GitHub account and a blog page.</h2>
           <h2>If you need help to create these accounts please check:</h2>
         </div>
         <div className={classes.helpButtons}>

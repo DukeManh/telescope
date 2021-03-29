@@ -17,6 +17,7 @@ type UserInfo = {
   firstName?: string;
   lastName?: string;
   displayName?: string;
+  email?: string;
   feeds?: string[];
   github?: {
     username: string;
@@ -76,6 +77,7 @@ const SignUpPage = () => {
     id: user?.id,
     isAdmin: user?.isAdmin,
     displayName: user?.name,
+    email: user?.email,
     blogOwnership: false,
     githubOwnership: false,
   });
@@ -95,14 +97,6 @@ const SignUpPage = () => {
   };
 
   const steps = ['Start', 'GitHub', 'Blog', 'Review'];
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
-
-  const handlePrevious = () => {
-    setActiveStep(activeStep - 1);
-  };
 
   const renderContent = () => {
     switch (activeStep) {
@@ -126,14 +120,14 @@ const SignUpPage = () => {
 
       <div>
         {activeStep > 0 && (
-          <Button className={classes.button} onClick={handlePrevious}>
+          <Button className={classes.button} onClick={() => setActiveStep(activeStep - 1)}>
             Previous
           </Button>
         )}
         {activeStep < steps.length - 1 ? (
           <Button
             className={classes.button}
-            onClick={handleNext}
+            onClick={() => setActiveStep(activeStep + 1)}
             disabled={
               // eslint-disable-next-line no-nested-ternary
               activeStep === 1

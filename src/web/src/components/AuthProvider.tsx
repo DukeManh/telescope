@@ -87,7 +87,6 @@ const AuthProvider = ({ children }: Props) => {
       // This token isn't ok, remove all auth info from storage
       removeToken();
       removeAuthState();
-
       console.error('Error parsing token for user', err);
     }
   }

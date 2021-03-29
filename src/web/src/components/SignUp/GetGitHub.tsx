@@ -74,8 +74,8 @@ const GetGitHub = ({ handleChange, agreement }: GetGitHubProps) => {
   return (
     <div className={classes.root}>
       <div className={classes.container}>
-        <h1>GitHub and Display Name</h1>
-        <h2>Enter your GitHub user name and your display name.</h2>
+        <h1>GitHub account</h1>
+        <h2>Verify your github account</h2>
         <h2>
           Your display name will be your name on Telescope System.
           <br /> It will be displayed in all of your posts and interactions with other users inside
@@ -87,23 +87,7 @@ const GetGitHub = ({ handleChange, agreement }: GetGitHubProps) => {
             <TextField
               fullWidth
               id="standard-basic"
-              label="GitHub Username"
-              className={classes.inputs}
-              InputProps={{
-                classes: {
-                  input: classes.formInput,
-                },
-              }}
-              InputLabelProps={{
-                classes: {
-                  root: classes.formInputLabel,
-                },
-              }}
-            />
-            <TextField
-              fullWidth
-              id="standard-basic"
-              label="Display Name"
+              label="GitHub Username*"
               className={classes.inputs}
               InputProps={{
                 classes: {
@@ -124,9 +108,6 @@ const GetGitHub = ({ handleChange, agreement }: GetGitHubProps) => {
           </div>
         </div>
         <FormControl required component="fieldset">
-          <FormLabel component="legend" className={classes.formLabel}>
-            I declare that I’m the owner and the maintainer of the GitHub account provided:
-          </FormLabel>
           <FormGroup>
             <FormControlLabel
               control={
@@ -136,10 +117,13 @@ const GetGitHub = ({ handleChange, agreement }: GetGitHubProps) => {
                   onChange={(e) => handleChange(e)}
                 />
               }
-              label={<h1 className={classes.formControlLabel}>Yes</h1>}
+              label={
+                <h1 className={classes.formControlLabel}>
+                  I declare that I’m the owner and the maintainer of this account*
+                </h1>
+              }
             />
           </FormGroup>
-          <FormHelperText>Field Required.</FormHelperText>
         </FormControl>
       </div>
     </div>
