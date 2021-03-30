@@ -69,7 +69,6 @@ const useStyles = makeStyles((theme: Theme) =>
     formLabel: {
       fontSize: '1em',
     },
-  })
 );
 
 const Overview = () => {

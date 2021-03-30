@@ -108,6 +108,7 @@ const GetGitHub = ({ handleChange, agreement }: GetGitHubProps) => {
           </div>
         </div>
         <FormControl required component="fieldset">
+
           <FormGroup>
             <FormControlLabel
               control={
