@@ -125,7 +125,9 @@ const DisplayName = () => {
           <h1>Hello {user.name}</h1>
         </div>
         <div className={classes.userInfo}>
-          <h2 className={classes.userInfoLabel}>Follow the information that we already have:</h2>
+          <h2 className={classes.userInfoLabel}>
+            The following information is what we already have:
+          </h2>
           <h2>
             <b>Full Name: </b>
             <span className={classes.userInfoType}>{user.name}</span>
@@ -141,9 +143,28 @@ const DisplayName = () => {
         <div className={classes.inputContainer}>
           <TextField
             fullWidth
-            id="standard-basic"
-            label="Display Name"
-            helperText="Choose your Telescope username"
+            disabled
+            id="email"
+            placeholder={user.email}
+            name="email"
+            InputProps={{
+              classes: {
+                input: classes.formInput,
+              },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: classes.formInputLabel,
+              },
+            }}
+          />
+        </div>
+        <div className={classes.inputContainer}>
+          <TextField
+            fullWidth
+            id="displayName"
+            label="Display Name (optional)"
+            helperText="Will be displayed in all your interactions within Telescope"
             name="displayName"
             InputProps={{
               classes: {
@@ -157,11 +178,44 @@ const DisplayName = () => {
             }}
           />
           <Button className={classes.button}>Validate Name</Button>
-
-          <p className={classes.displayNameInfo}>
-            * Your display name will be displayed in all of your posts and interactions with other
-            users inside Telescope’s ecosystem.{' '}
-          </p>
+        </div>
+        <div className={classes.inputContainer}>
+          <TextField
+            fullWidth
+            required
+            label="First name"
+            id="firstName"
+            name="Fist Name"
+            InputProps={{
+              classes: {
+                input: classes.formInput,
+              },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: classes.formInputLabel,
+              },
+            }}
+          />
+        </div>
+        <div className={classes.inputContainer}>
+          <TextField
+            fullWidth
+            label="Last name"
+            required
+            id="lastName"
+            name="Last Name"
+            InputProps={{
+              classes: {
+                input: classes.formInput,
+              },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: classes.formInputLabel,
+              },
+            }}
+          />
         </div>
         <div className={classes.text}>
           <h3>Click NEXT to continue:</h3>
