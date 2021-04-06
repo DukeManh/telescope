@@ -1,7 +1,9 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import { useState } from 'react';
+
 import Button from '@material-ui/core/Button';
-import { useState, SyntheticEvent, ChangeEvent } from 'react';
-import Link from 'next/link';
+import { Formik, Form } from 'formik';
+
 import useAuth from '../hooks/use-auth';
 import Overview from '../components/SignUp/Overview';
 import DisplayName from '../components/SignUp/DisplayName';
@@ -10,20 +12,19 @@ import GetBlogRSS from '../components/SignUp/GetBlogRSS';
 import Review from '../components/SignUp/Review';
 import DynamicImage from '../components/DynamicImage';
 
-type UserInfo = {
-  id?: string;
-  isAdmin?: boolean;
-  firstName?: string;
-  lastName?: string;
-  displayName?: string;
-  feeds?: string[];
-  github?: {
-    username: string;
-    avatarUrl: string;
-  };
-  blogOwnership: boolean;
-  githubOwnership: boolean;
-};
+import formFields from '../components/SignUp/formFields';
+import formSchema from '../components/SignUp/formSchema';
+
+const {
+  firstName,
+  lastName,
+  displayName,
+  githubUserName,
+  github,
+  blogUrl,
+  feeds,
+  email,
+} = formFields;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
       gridGap: '2%',
       justifyItems: 'center',
       fontFamily: 'Spartan',
-      height: '420px',
+      height: '480px',
       width: '510px',
       padding: '1%',
       borderRadius: '5px',
@@ -112,32 +113,8 @@ const SignUpPage = () => {
     login();
   }
 
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    id: user?.id,
-    isAdmin: user?.isAdmin,
-    displayName: user?.name,
-    blogOwnership: false,
-    githubOwnership: false,
-    github: {
-      username: '',
-      avatarUrl: '',
-    },
-  });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const { name } = e.target;
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    setUserInfo({
-      ...userInfo,
-      [name]: value,
-    });
-    console.log(userInfo);
-  };
-
-  const handleSubmit = (e: SyntheticEvent) => {
-    e.preventDefault();
-    console.log(userInfo);
+  const handleSubmit = (values) => {
+    console.log(values);
   };
 
   const handleNext = () => {
@@ -148,39 +125,52 @@ const SignUpPage = () => {
     setActiveStep(activeStep - 1);
   };
 
-  const renderContent = () => {
+  const renderForm = () => {
     switch (activeStep) {
       case 0:
         return <Overview />;
       case 1:
         return <DisplayName />;
       case 2:
-        return (
-          <GetGitHub
-            handleChange={handleChange}
-            agreement={userInfo.githubOwnership}
-            userInfo={userInfo}
-          />
-        );
+        return <GetGitHub />;
       case 3:
-        return <GetBlogRSS handleChange={handleChange} agreement={userInfo.blogOwnership} />;
+        return <GetBlogRSS />;
       case 4:
-        return <Review userInfo={userInfo} />;
+        return <Review />;
       default:
         return null;
     }
   };
 
   return (
-    <div className={classes.root}>
+    <Formik
+      className={classes.root}
+      onSubmit={handleSubmit}
+      validationSchema={formSchema[activeStep]}
+      initialValues={{
+        [firstName.name]: '',
+        [lastName.name]: '',
+        [displayName.name]: '',
+        [email.name]: user?.email || '',
+        [githubUserName.name]: '',
+        [github.name]: {
+          username: '',
+          avatarUrl: '',
+        },
+        [blogUrl.name]: 'https:://',
+        [feeds.name]: [] as Array<string>,
+      }}
+    >
       <div className={classes.imageContainer}>
         <DynamicImage />
       </div>
       <div className={classes.signUpContainer}>
         <h1 className={classes.title}>Telescope Account</h1>
-        <div className={classes.infoContainer}>{renderContent()}</div>
+        <Form autoComplete="off">
+          <div className={classes.infoContainer}>{renderForm()}</div>
+        </Form>
         <div className={classes.formContainer}>
-          <form onSubmit={handleSubmit} autoComplete="off">
+          <div>
             <div className={classes.buttonsWrapper}>
               {activeStep > 0 && (
                 <Button className={classes.button} onClick={handlePrevious}>
@@ -193,38 +183,20 @@ const SignUpPage = () => {
                 </Button>
               )}
               {activeStep < 4 && activeStep > 0 && (
-                <Button
-                  className={classes.button}
-                  onClick={handleNext}
-                  disabled={
-                    // eslint-disable-next-line no-nested-ternary
-                    activeStep === 2
-                      ? !userInfo.githubOwnership
-                      : activeStep === 3
-                      ? !userInfo.blogOwnership
-                      : false
-                  }
-                >
+                <Button className={classes.button} onClick={handleNext}>
                   Next
                 </Button>
               )}
               {activeStep === 4 && (
-                <Link href="/" passHref>
-                  <Button
-                    className={classes.button}
-                    onClick={() => {
-                      console.log(userInfo);
-                    }}
-                  >
-                    Confirm
-                  </Button>
-                </Link>
+                <Button className={classes.button} type="submit">
+                  Confirm
+                </Button>
               )}
             </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
+    </Formik>
   );
 };
 

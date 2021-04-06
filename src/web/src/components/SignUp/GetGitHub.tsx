@@ -120,13 +120,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type GetGitHubProps = {
-  handleChange: any;
-  userInfo: any;
-  agreement: boolean;
-};
-
-const GetGitHub = ({ handleChange, agreement, userInfo }: GetGitHubProps) => {
+const GetGitHub = () => {
   const classes = useStyles();
 
   return (
@@ -140,7 +134,7 @@ const GetGitHub = ({ handleChange, agreement, userInfo }: GetGitHubProps) => {
           <div className={classes.inputsContainer}>
             <TextField
               fullWidth
-              id="standard-basic"
+              id="github"
               label="GitHub Username"
               helperText="Verify your GitHub account"
               InputProps={{
