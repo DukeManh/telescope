@@ -90,11 +90,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type GetReviewProps = {
-  userInfo: any;
-};
-
-const Review = ({ userInfo }: GetReviewProps) => {
+const Review = () => {
   const classes = useStyles();
   const loading = false;
   const rssExample = ['www.test1.feed.com', 'www.test2.feed.com', 'www.test3.feed.com'];

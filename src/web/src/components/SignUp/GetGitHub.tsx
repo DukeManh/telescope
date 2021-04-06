@@ -1,11 +1,15 @@
 import { Button, createStyles, makeStyles, Theme } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+// import FormControl from '@material-ui/core/FormControl';
+// import FormGroup from '@material-ui/core/FormGroup';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Checkbox from '@material-ui/core/Checkbox';
 
-import PostAvatar from '../Posts/PostAvatar';
+// import PostAvatar from '../Posts/PostAvatar';
+
+import formFields from './formFields';
+
+const { githubUserName } = formFields;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -134,9 +138,8 @@ const GetGitHub = () => {
           <div className={classes.inputsContainer}>
             <TextField
               fullWidth
-              id="github"
-              label="GitHub Username"
-              helperText="Verify your GitHub account"
+              label={githubUserName.label}
+              name={githubUserName.name}
               InputProps={{
                 classes: {
                   input: classes.formInput,
@@ -150,20 +153,19 @@ const GetGitHub = () => {
             />
             <Button className={classes.button}>Validate Git</Button>
           </div>
-          <div className={classes.avatarPreview}>
+          {/* <div className={classes.avatarPreview}>
             <h1 className={classes.avatarTitle}>Avatar Preview</h1>
             <PostAvatar name={userInfo.displayName} blog="test" />
             <h2 className={classes.username}>{userInfo.displayName}</h2>
-          </div>
+          </div> */}
         </div>
-        <FormControl required component="fieldset">
+        {/* <FormControl required component="fieldset">
           <FormGroup>
             <FormControlLabel
               control={
                 <Checkbox
                   checked={agreement}
                   name="githubOwnership"
-                  onChange={(e) => handleChange(e)}
                 />
               }
               label={
@@ -173,7 +175,7 @@ const GetGitHub = () => {
               }
             />
           </FormGroup>
-        </FormControl>
+        </FormControl> */}
         <div className={classes.text}>
           <h3>Click NEXT to continue</h3>
         </div>

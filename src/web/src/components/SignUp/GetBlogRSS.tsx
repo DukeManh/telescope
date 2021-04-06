@@ -140,12 +140,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type GetBlogRssProps = {
-  handleChange: Function;
-  agreement: boolean;
-};
-
-const GetBlogRSS = ({ handleChange, agreement }: GetBlogRssProps) => {
+const GetBlogRSS = () => {
   const classes = useStyles();
   const [validateBlog, setValidateBlog] = useState(false);
   const [validateConfirm, setValidateConfirm] = useState(false);
@@ -216,7 +211,7 @@ const GetBlogRSS = ({ handleChange, agreement }: GetBlogRssProps) => {
             </div>
           </div>
         </div>
-        <div className={classes.agreeMessage}>
+        {/* <div className={classes.agreeMessage}>
           <FormControl required component="fieldset">
             <FormGroup>
               <FormControlLabel
@@ -235,7 +230,7 @@ const GetBlogRSS = ({ handleChange, agreement }: GetBlogRssProps) => {
               />
             </FormGroup>
           </FormControl>
-        </div>
+        </div> */}
         <div className={classes.text}>
           <h3>Click NEXT to continue</h3>
         </div>

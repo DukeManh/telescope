@@ -3,6 +3,10 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import useAuth from '../../hooks/use-auth';
 
+import formFields from './formFields';
+
+const { firstName, lastName, displayName, email } = formFields;
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
@@ -144,9 +148,9 @@ const DisplayName = () => {
           <TextField
             fullWidth
             disabled
-            id="email"
             placeholder={user.email}
-            name="email"
+            value={user.email}
+            name={email.name}
             InputProps={{
               classes: {
                 input: classes.formInput,
@@ -162,10 +166,9 @@ const DisplayName = () => {
         <div className={classes.inputContainer}>
           <TextField
             fullWidth
-            id="displayName"
-            label="Display Name (optional)"
+            label={displayName.label}
             helperText="Will be displayed in all your interactions within Telescope"
-            name="displayName"
+            name={displayName.name}
             InputProps={{
               classes: {
                 input: classes.formInput,
@@ -183,9 +186,8 @@ const DisplayName = () => {
           <TextField
             fullWidth
             required
-            label="First name"
-            id="firstName"
-            name="Fist Name"
+            label={firstName.label}
+            name={firstName.name}
             InputProps={{
               classes: {
                 input: classes.formInput,
@@ -201,10 +203,9 @@ const DisplayName = () => {
         <div className={classes.inputContainer}>
           <TextField
             fullWidth
-            label="Last name"
             required
-            id="lastName"
-            name="Last Name"
+            label={lastName.label}
+            name={lastName.name}
             InputProps={{
               classes: {
                 input: classes.formInput,

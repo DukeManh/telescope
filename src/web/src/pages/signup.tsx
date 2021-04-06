@@ -113,9 +113,7 @@ const SignUpPage = () => {
     login();
   }
 
-  const handleSubmit = (values) => {
-    console.log(values);
-  };
+  const handleSubmit = () => {};
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -143,32 +141,34 @@ const SignUpPage = () => {
   };
 
   return (
-    <Formik
-      className={classes.root}
-      onSubmit={handleSubmit}
-      validationSchema={formSchema[activeStep]}
-      initialValues={{
-        [firstName.name]: '',
-        [lastName.name]: '',
-        [displayName.name]: '',
-        [email.name]: user?.email || '',
-        [githubUserName.name]: '',
-        [github.name]: {
-          username: '',
-          avatarUrl: '',
-        },
-        [blogUrl.name]: 'https:://',
-        [feeds.name]: [] as Array<string>,
-      }}
-    >
+    <div className={classes.root}>
       <div className={classes.imageContainer}>
         <DynamicImage />
       </div>
       <div className={classes.signUpContainer}>
         <h1 className={classes.title}>Telescope Account</h1>
-        <Form autoComplete="off">
-          <div className={classes.infoContainer}>{renderForm()}</div>
-        </Form>
+        <Formik
+          className={classes.root}
+          onSubmit={handleSubmit}
+          validationSchema={formSchema[activeStep]}
+          initialValues={{
+            [firstName.name]: '',
+            [lastName.name]: '',
+            [displayName.name]: '',
+            [email.name]: user?.email || '',
+            [githubUserName.name]: '',
+            [github.name]: {
+              username: '',
+              avatarUrl: '',
+            },
+            [blogUrl.name]: 'https:://',
+            [feeds.name]: [] as Array<string>,
+          }}
+        >
+          <Form autoComplete="off" className={classes.infoContainer}>
+            {renderForm()}
+          </Form>
+        </Formik>
         <div className={classes.formContainer}>
           <div>
             <div className={classes.buttonsWrapper}>
@@ -196,7 +196,7 @@ const SignUpPage = () => {
           </div>
         </div>
       </div>
-    </Formik>
+    </div>
   );
 };
 
