@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 
-import formFields from './formFields';
+import formModels from './FormModel';
 
-const { firstName, lastName, displayName, githubUserName, github, feeds, blogUrl } = formFields;
+const { firstName, lastName, displayName, githubUserName, github, feeds, blogUrl } = formModels;
 
 const checkLength = (min: number, max: number) => (val: string | undefined): boolean =>
   val !== undefined && val.length >= min && val.length <= max;

@@ -1,6 +1,6 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import Spinner from '../Spinner';
-import PostAvatar from '../Posts/PostAvatar';
+import Spinner from '../../Spinner';
+// import PostAvatar from '../Posts/PostAvatar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -106,13 +106,13 @@ const Review = () => {
         <div className={classes.container}>
           <h1 className={classes.titlePage}>Review your Information</h1>
           <div className={classes.contentContainer}>
-            <div className={classes.avatar}>
+            {/* <div className={classes.avatar}>
               <PostAvatar name={userInfo.displayName} blog="test" />
               <h2>
                 Display Name:
                 <p>{userInfo.displayName}</p>
               </h2>
-            </div>
+            </div> */}
             <div className={classes.senecaBlogInfo}>
               <h3>From seneca:</h3>
               <p>Full Name: test name example</p>

@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import { Button, createStyles, makeStyles, Theme } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
+
+import formModels from '../FormSchema/FormModel';
+import { TextInput } from '../FormComponents';
+
+const { blogUrl } = formModels;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,25 +65,9 @@ const useStyles = makeStyles((theme: Theme) =>
       '& .MuiFormLabel-root': {
         color: 'black',
       },
-      '& .MuiInput-root': {
-        borderBottom: '1px solid black',
-      },
       [theme.breakpoints.down(600)]: {
         gridTemplateColumns: '80% 20%',
       },
-    },
-    formInput: {
-      fontSize: '.8em',
-      color: 'black',
-    },
-    formInputLabel: {
-      fontSize: '1.4em',
-      color: 'black',
-    },
-    formControlLabel: {
-      fontSize: '.9em',
-      height: '10px',
-      color: '#474747',
     },
     helpMessage: {
       fontSize: '.9em',
@@ -140,7 +128,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const GetBlogRSS = () => {
+const RSSFeeds = () => {
   const classes = useStyles();
   const [validateBlog, setValidateBlog] = useState(false);
   const [validateConfirm, setValidateConfirm] = useState(false);
@@ -161,21 +149,11 @@ const GetBlogRSS = () => {
         </h2>
         <div className={classes.infoContainer}>
           <div className={classes.inputsContainer}>
-            <TextField
-              fullWidth
-              id="standard-basic"
-              label="Blog URL"
+            <TextInput
+              required
+              name={blogUrl.name}
+              label={blogUrl.label}
               helperText="Verify your Blog URL"
-              InputProps={{
-                classes: {
-                  input: classes.formInput,
-                },
-              }}
-              InputLabelProps={{
-                classes: {
-                  root: classes.formInputLabel,
-                },
-              }}
             />
             <Button className={classes.button} onClick={dumbHandleChange}>
               Validate Blog
@@ -193,7 +171,7 @@ const GetBlogRSS = () => {
                       <FormControlLabel
                         key={rss}
                         control={<Checkbox checked name={rss} onChange={dumbHandleChange} />}
-                        label={<h1 className={classes.formControlLabel}>{rss}</h1>}
+                        label={<h1>{rss}</h1>}
                       />
                     ))}
                   </FormGroup>
@@ -239,4 +217,4 @@ const GetBlogRSS = () => {
   );
 };
 
-export default GetBlogRSS;
+export default RSSFeeds;

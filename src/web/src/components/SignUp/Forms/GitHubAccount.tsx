@@ -1,5 +1,4 @@
 import { Button, createStyles, makeStyles, Theme } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
 // import FormControl from '@material-ui/core/FormControl';
 // import FormGroup from '@material-ui/core/FormGroup';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -7,9 +6,10 @@ import TextField from '@material-ui/core/TextField';
 
 // import PostAvatar from '../Posts/PostAvatar';
 
-import formFields from './formFields';
+import formModels from '../FormSchema/FormModel';
+import { TextInput } from '../FormComponents';
 
-const { githubUserName } = formFields;
+const { githubUserName } = formModels;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -64,9 +64,6 @@ const useStyles = makeStyles((theme: Theme) =>
       '& .MuiFormLabel-root': {
         color: 'black',
       },
-      '& .MuiInput-root': {
-        borderBottom: '1px solid black',
-      },
     },
     button: {
       height: '35px',
@@ -103,19 +100,6 @@ const useStyles = makeStyles((theme: Theme) =>
     username: {
       fontSize: '1.1em',
     },
-    formInput: {
-      fontSize: '1.1em',
-      color: 'black',
-    },
-    formInputLabel: {
-      fontSize: '1.4em',
-      color: 'black',
-    },
-    formControlLabel: {
-      fontSize: '.9em',
-      height: '10px',
-      color: '#474747',
-    },
     text: {
       fontSize: '0.9em',
       alignSelf: 'end',
@@ -124,7 +108,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const GetGitHub = () => {
+const GitHubAccount = () => {
   const classes = useStyles();
 
   return (
@@ -136,21 +120,7 @@ const GetGitHub = () => {
         </h2>
         <div className={classes.infoContainer}>
           <div className={classes.inputsContainer}>
-            <TextField
-              fullWidth
-              label={githubUserName.label}
-              name={githubUserName.name}
-              InputProps={{
-                classes: {
-                  input: classes.formInput,
-                },
-              }}
-              InputLabelProps={{
-                classes: {
-                  root: classes.formInputLabel,
-                },
-              }}
-            />
+            <TextInput label={githubUserName.label} name={githubUserName.name} />
             <Button className={classes.button}>Validate Git</Button>
           </div>
           {/* <div className={classes.avatarPreview}>
@@ -184,4 +154,4 @@ const GetGitHub = () => {
   );
 };
 
-export default GetGitHub;
+export default GitHubAccount;

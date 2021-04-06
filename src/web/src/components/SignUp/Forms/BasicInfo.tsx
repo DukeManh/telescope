@@ -1,11 +1,11 @@
 import { createStyles, makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import useAuth from '../../hooks/use-auth';
+import useAuth from '../../../hooks/use-auth';
 
-import formFields from './formFields';
+import formModels from '../FormSchema/FormModel';
+import { TextInput } from '../FormComponents';
 
-const { firstName, lastName, displayName, email } = formFields;
+const { firstName, lastName, displayName, email } = formModels;
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -75,20 +75,12 @@ const useStyles = makeStyles((theme) =>
       '& .MuiFormLabel-root': {
         color: 'black',
       },
-      '& .MuiInput-root': {
-        borderBottom: '1px solid black',
+      '& .MuiInputBase-input.Mui-disabled': {
+        marginTop: '16px',
       },
     },
     displayNameTitle: {
       fontSize: '0.85em',
-    },
-    formInput: {
-      fontSize: '1.1em',
-      color: 'black',
-    },
-    formInputLabel: {
-      fontSize: '1.4em',
-      color: 'black',
     },
     button: {
       fontSize: '0.8em',
@@ -141,82 +133,22 @@ const DisplayName = () => {
             <span className={classes.userInfoType}>{user.email}</span>
           </h2>
         </div>
-        <div className={classes.displayNameTitle}>
-          <h2>Choose your Display Name:</h2>
+        <div className={classes.inputContainer}>
+          <TextInput disabled name={email.name} value={user.email} />
         </div>
         <div className={classes.inputContainer}>
-          <TextField
-            fullWidth
-            disabled
-            placeholder={user.email}
-            value={user.email}
-            name={email.name}
-            InputProps={{
-              classes: {
-                input: classes.formInput,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: classes.formInputLabel,
-              },
-            }}
-          />
-        </div>
-        <div className={classes.inputContainer}>
-          <TextField
-            fullWidth
+          <TextInput
             label={displayName.label}
             helperText="Will be displayed in all your interactions within Telescope"
             name={displayName.name}
-            InputProps={{
-              classes: {
-                input: classes.formInput,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: classes.formInputLabel,
-              },
-            }}
           />
           <Button className={classes.button}>Validate Name</Button>
         </div>
         <div className={classes.inputContainer}>
-          <TextField
-            fullWidth
-            required
-            label={firstName.label}
-            name={firstName.name}
-            InputProps={{
-              classes: {
-                input: classes.formInput,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: classes.formInputLabel,
-              },
-            }}
-          />
+          <TextInput required label={firstName.label} name={firstName.name} />
         </div>
         <div className={classes.inputContainer}>
-          <TextField
-            fullWidth
-            required
-            label={lastName.label}
-            name={lastName.name}
-            InputProps={{
-              classes: {
-                input: classes.formInput,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: classes.formInputLabel,
-              },
-            }}
-          />
+          <TextInput required label={lastName.label} name={lastName.name} />
         </div>
         <div className={classes.text}>
           <h3>Click NEXT to continue:</h3>

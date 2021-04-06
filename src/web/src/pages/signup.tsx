@@ -5,15 +5,15 @@ import Button from '@material-ui/core/Button';
 import { Formik, Form } from 'formik';
 
 import useAuth from '../hooks/use-auth';
-import Overview from '../components/SignUp/Overview';
-import DisplayName from '../components/SignUp/DisplayName';
-import GetGitHub from '../components/SignUp/GetGitHub';
-import GetBlogRSS from '../components/SignUp/GetBlogRSS';
-import Review from '../components/SignUp/Review';
+import Overview from '../components/SignUp/Forms/Overview';
+import BasicInfo from '../components/SignUp/Forms/BasicInfo';
+import GitHubAccount from '../components/SignUp/Forms/GitHubAccount';
+import RSSFeeds from '../components/SignUp/Forms/RSSFeeds';
+import Review from '../components/SignUp/Forms/Review';
 import DynamicImage from '../components/DynamicImage';
 
-import formFields from '../components/SignUp/formFields';
-import formSchema from '../components/SignUp/formSchema';
+import formModels from '../components/SignUp/FormSchema/FormModel';
+import formSchema from '../components/SignUp/FormSchema/FormSchema';
 
 const {
   firstName,
@@ -24,7 +24,7 @@ const {
   blogUrl,
   feeds,
   email,
-} = formFields;
+} = formModels;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -113,8 +113,6 @@ const SignUpPage = () => {
     login();
   }
 
-  const handleSubmit = () => {};
-
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -128,11 +126,11 @@ const SignUpPage = () => {
       case 0:
         return <Overview />;
       case 1:
-        return <DisplayName />;
+        return <BasicInfo />;
       case 2:
-        return <GetGitHub />;
+        return <GitHubAccount />;
       case 3:
-        return <GetBlogRSS />;
+        return <RSSFeeds />;
       case 4:
         return <Review />;
       default:
@@ -148,8 +146,9 @@ const SignUpPage = () => {
       <div className={classes.signUpContainer}>
         <h1 className={classes.title}>Telescope Account</h1>
         <Formik
-          className={classes.root}
-          onSubmit={handleSubmit}
+          onSubmit={(values) => {
+            console.log(JSON.stringify(values, null, 2));
+          }}
           validationSchema={formSchema[activeStep]}
           initialValues={{
             [firstName.name]: '',
@@ -170,29 +169,27 @@ const SignUpPage = () => {
           </Form>
         </Formik>
         <div className={classes.formContainer}>
-          <div>
-            <div className={classes.buttonsWrapper}>
-              {activeStep > 0 && (
-                <Button className={classes.button} onClick={handlePrevious}>
-                  Previous
-                </Button>
-              )}
-              {activeStep === 0 && (
-                <Button className={classes.button} onClick={handleNext}>
-                  Start
-                </Button>
-              )}
-              {activeStep < 4 && activeStep > 0 && (
-                <Button className={classes.button} onClick={handleNext}>
-                  Next
-                </Button>
-              )}
-              {activeStep === 4 && (
-                <Button className={classes.button} type="submit">
-                  Confirm
-                </Button>
-              )}
-            </div>
+          <div className={classes.buttonsWrapper}>
+            {activeStep > 0 && (
+              <Button className={classes.button} onClick={handlePrevious}>
+                Previous
+              </Button>
+            )}
+            {activeStep === 0 && (
+              <Button className={classes.button} onClick={handleNext}>
+                Start
+              </Button>
+            )}
+            {activeStep < 4 && activeStep > 0 && (
+              <Button className={classes.button} onClick={handleNext}>
+                Next
+              </Button>
+            )}
+            {activeStep === 4 && (
+              <Button className={classes.button} type="submit">
+                Confirm
+              </Button>
+            )}
           </div>
         </div>
       </div>
