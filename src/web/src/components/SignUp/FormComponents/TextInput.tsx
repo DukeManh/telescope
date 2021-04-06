@@ -9,7 +9,7 @@ const useStyles = makeStyles(() =>
       color: 'black',
     },
     formInputLabel: {
-      fontSize: '1.4em',
+      fontSize: '1.2em',
       color: 'black',
     },
   })

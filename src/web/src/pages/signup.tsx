@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100vw',
       boxSizing: 'border-box',
       position: 'relative',
+      fontSize: '1.1rem',
     },
     imageContainer: {
       minHeight: '100vh',

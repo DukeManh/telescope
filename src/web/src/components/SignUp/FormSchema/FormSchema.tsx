@@ -19,9 +19,7 @@ export default [
     [lastName.name]: Yup.string()
       .required(`${lastName.requiredErrorMsg}`)
       .test('len', lastName.invalidErrorMsg, checkLength(2, 16)),
-    [displayName.name]: Yup.string()
-      .default('')
-      .test('len', displayName.invalidErrorMsg, checkLength(6, 18)),
+    [displayName.name]: Yup.string().default(''),
   }),
 
   // Github username and github data

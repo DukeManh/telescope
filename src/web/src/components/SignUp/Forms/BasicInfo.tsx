@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import useAuth from '../../../hooks/use-auth';
 
 import formModels from '../FormSchema/FormModel';
-import { TextInput } from '../FormComponents';
+import { TextInput, InputContainer } from '../FormComponents';
 
 const { firstName, lastName, displayName, email } = formModels;
 
@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.down(600)]: {
         gridTemplateColumns: '1fr',
       },
+      '& span': {
+        color: '#525252',
+      },
     },
     userInfoLabel: {
       gridColumnStart: '1',
@@ -57,26 +60,6 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.down(600)]: {
         gridColumnStart: '1',
         gridColumnEnd: '2',
-      },
-    },
-    userInfoType: {
-      color: '#525252',
-    },
-    inputContainer: {
-      display: 'grid',
-      alignItems: 'center',
-      justifyItems: 'center',
-      width: '90%',
-      gridTemplateColumns: '80% 20%',
-      '& .MuiFormHelperText-root': {
-        fontSize: '0.9em',
-        color: 'black',
-      },
-      '& .MuiFormLabel-root': {
-        color: 'black',
-      },
-      '& .MuiInputBase-input.Mui-disabled': {
-        marginTop: '16px',
       },
     },
     displayNameTitle: {
@@ -126,30 +109,30 @@ const DisplayName = () => {
           </h2>
           <h2>
             <b>Full Name: </b>
-            <span className={classes.userInfoType}>{user.name}</span>
+            <span>{user.name}</span>
           </h2>
           <h2>
             <b>Email: </b>
-            <span className={classes.userInfoType}>{user.email}</span>
+            <span>{user.email}</span>
           </h2>
         </div>
-        <div className={classes.inputContainer}>
+        <InputContainer>
           <TextInput disabled name={email.name} value={user.email} />
-        </div>
-        <div className={classes.inputContainer}>
+        </InputContainer>
+        <InputContainer>
           <TextInput
             label={displayName.label}
             helperText="Will be displayed in all your interactions within Telescope"
             name={displayName.name}
           />
           <Button className={classes.button}>Validate Name</Button>
-        </div>
-        <div className={classes.inputContainer}>
+        </InputContainer>
+        <InputContainer>
           <TextInput required label={firstName.label} name={firstName.name} />
-        </div>
-        <div className={classes.inputContainer}>
+        </InputContainer>
+        <InputContainer>
           <TextInput required label={lastName.label} name={lastName.name} />
-        </div>
+        </InputContainer>
         <div className={classes.text}>
           <h3>Click NEXT to continue:</h3>
         </div>
