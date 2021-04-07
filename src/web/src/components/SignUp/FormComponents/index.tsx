@@ -1,4 +1,4 @@
 import TextInput from './TextInput';
-import InputContainer from './InputContainer';
+import CheckBoxInput from './CheckBoxInput';
 
-export { TextInput, InputContainer };
+export { TextInput, CheckBoxInput };

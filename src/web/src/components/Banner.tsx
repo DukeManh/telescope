@@ -108,7 +108,7 @@ export default function Banner() {
       }
     }
     getGitData();
-  }, [telescopeUrl]);
+  }, []);
 
   return (
     <>

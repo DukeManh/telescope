@@ -7,7 +7,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import formModels from '../FormSchema/FormModel';
-import { TextInput } from '../FormComponents';
+import { TextInput, CheckBoxInput } from '../FormComponents';
 
 const { blogUrl } = formModels;
 

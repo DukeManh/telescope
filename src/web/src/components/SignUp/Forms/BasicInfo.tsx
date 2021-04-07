@@ -1,9 +1,10 @@
+import { ReactNode } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import useAuth from '../../../hooks/use-auth';
 
 import formModels from '../FormSchema/FormModel';
-import { TextInput, InputContainer } from '../FormComponents';
+import { TextInput } from '../FormComponents';
 
 const { firstName, lastName, displayName, email } = formModels;
 
@@ -83,8 +84,35 @@ const useStyles = makeStyles((theme) =>
       gridColumnEnd: '3',
       fontSize: '1em',
     },
+    inputContainer: {
+      display: 'grid',
+      alignItems: 'center',
+      justifyItems: 'center',
+      width: '90%',
+      gridTemplateColumns: '80% 20%',
+      '& .MuiFormHelperText-root': {
+        fontSize: '0.9em',
+        color: 'black',
+      },
+      '& .MuiFormLabel-root': {
+        color: 'black',
+      },
+      '& .MuiInputBase-input.Mui-disabled': {
+        marginTop: '16px',
+      },
+    },
   })
 );
+
+type Props = {
+  children: ReactNode;
+};
+
+const InputContainer = ({ children }: Props) => {
+  const classes = useStyles();
+
+  return <div className={classes.inputContainer}>{children}</div>;
+};
 
 const DisplayName = () => {
   const classes = useStyles();

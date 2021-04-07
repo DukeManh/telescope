@@ -1,13 +1,7 @@
 import { Button, createStyles, makeStyles, Theme } from '@material-ui/core';
-// import FormControl from '@material-ui/core/FormControl';
-// import FormGroup from '@material-ui/core/FormGroup';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
-
-// import PostAvatar from '../Posts/PostAvatar';
 
 import formModels from '../FormSchema/FormModel';
-import { TextInput } from '../FormComponents';
+import { TextInput, CheckBoxInput } from '../FormComponents';
 
 const { githubUserName } = formModels;
 
@@ -129,23 +123,7 @@ const GitHubAccount = () => {
             <h2 className={classes.username}>{userInfo.displayName}</h2>
           </div> */}
         </div>
-        {/* <FormControl required component="fieldset">
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={agreement}
-                  name="githubOwnership"
-                />
-              }
-              label={
-                <h1 className={classes.formControlLabel}>
-                  I declare that I’m the owner and the maintainer of this GitHub account
-                </h1>
-              }
-            />
-          </FormGroup>
-        </FormControl> */}
+        <CheckBoxInput label="I declare that I’m the owner and the maintainer of this GitHub account" />
       </div>
     </div>
   );
