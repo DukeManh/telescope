@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import useSWR from 'swr';
 import PostAvatar from '../../Posts/PostAvatar';
 
+import useSWRWithTimeout from '../../../hooks/use-swr-with-timeout';
 import formModels from '../FormSchema/FormModel';
 import { TextInput, CheckBoxInput } from '../FormComponents';
 
@@ -97,35 +97,23 @@ type GitHubData = {
 const GitHubAccount = ({ values, setFieldValue }: FormProps) => {
   const classes = useStyles();
 
-  const [interval, setInterval] = useState(setTimeout(() => {}, 0));
-
-  const { data: github, error } = useSWR(
+  const { data: github, error } = useSWRWithTimeout<GitHubData>(
     values.githubUsername ? `${gitHubApiUrl}/${values.githubUsername}` : null,
-    (url) => {
-      clearTimeout(interval);
-      return new Promise<GitHubData>((resolve, reject) => {
-        setInterval(
-          setTimeout(async () => {
-            try {
-              const res = await fetch(url);
-              if (!res.ok) {
-                throw new Error(res.statusText);
-              }
-              const data = await res.json();
-              setFieldValue('github', {
-                username: data.login,
-                avatarUrl: data.avatar_url,
-              });
-              resolve(data);
-            } catch (err) {
-              setFieldValue('github', {}, true);
-              reject(err);
-            }
-          }, 1000)
-        );
+    1000
+  );
+
+  useEffect(() => {
+    if (error) {
+      setFieldValue('github', {}, true);
+    }
+
+    if (github) {
+      setFieldValue('github', {
+        username: github.login,
+        avatarUrl: github.avatar_url,
       });
     }
-  );
+  }, [github, error, setFieldValue]);
 
   return (
     <div className={classes.root}>
