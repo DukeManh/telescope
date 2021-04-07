@@ -2,7 +2,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { useState } from 'react';
 
 import Button from '@material-ui/core/Button';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikProps } from 'formik';
 
 import useAuth from '../hooks/use-auth';
 import Overview from '../components/SignUp/Forms/Overview';
@@ -115,6 +115,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+type FormProps = {
+  values: { [x: string]: string | string[] | { username: string; avatarUrl: string } };
+  setFieldValue: Function;
+};
+
 const SignUpPage = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -133,14 +138,14 @@ const SignUpPage = () => {
     setActiveStep(activeStep - 1);
   };
 
-  const renderForm = () => {
+  const renderForm = ({ values, setFieldValue }: FormProps) => {
     switch (activeStep) {
       case 0:
         return <Overview />;
       case 1:
         return <BasicInfo />;
       case 2:
-        return <GitHubAccount />;
+        return <GitHubAccount values={values} setFieldValue={setFieldValue} />;
       case 3:
         return <RSSFeeds />;
       case 4:
@@ -181,10 +186,10 @@ const SignUpPage = () => {
             [feeds.name]: [] as Array<string>,
           }}
         >
-          {({ values }) => (
+          {(props) => (
             <>
               <Form autoComplete="off" className={classes.infoContainer}>
-                {renderForm()}
+                {renderForm(props)}
                 <div className={classes.text}>
                   <h3>Click NEXT to continue</h3>
                 </div>

@@ -19,7 +19,7 @@ export default {
   github: {
     name: 'github',
     label: 'Github Data`',
-    invalidErrorMsg: 'Missing GiHub user info',
+    invalidErrorMsg: 'Invalid GitHub profile',
   },
   githubUserName: {
     name: 'githubUsername',

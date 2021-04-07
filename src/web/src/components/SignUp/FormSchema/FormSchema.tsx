@@ -32,7 +32,6 @@ export default [
       })
       .required(github.invalidErrorMsg),
   }),
-
   // Blog URL and RSS feeds
   Yup.object().shape({
     [blogUrl.name]: Yup.string().url().required(`${blogUrl.requiredErrorMsg}`),

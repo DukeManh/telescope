@@ -1,9 +1,12 @@
-import { Button, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { useState } from 'react';
+import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import useSWR from 'swr';
+import PostAvatar from '../../Posts/PostAvatar';
 
 import formModels from '../FormSchema/FormModel';
 import { TextInput, CheckBoxInput } from '../FormComponents';
 
-const { githubUserName } = formModels;
+const { githubUserName, github: githubModel } = formModels;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
     inputsContainer: {
       width: '100%',
       display: 'grid',
-      gridTemplateColumns: '80% 20%',
+      gridTemplateColumns: '100%',
       '& .MuiFormHelperText-root': {
         fontSize: '0.9em',
         color: 'black',
@@ -59,28 +62,12 @@ const useStyles = makeStyles((theme: Theme) =>
         color: 'black',
       },
     },
-    button: {
-      height: '35px',
-      width: '50%',
-      alignSelf: 'center',
-      fontSize: '0.8em',
-      background: '#121D59',
-      color: '#A0D1FB',
-      marginLeft: '5%',
-      '&:hover': {
-        color: 'black',
-        border: '1px solid #121D59',
-      },
-    },
     avatarPreview: {
-      display: 'grid',
-      gridTemplateColumns: '1fr',
       textAlign: 'center',
       justifyItems: 'center',
       alignItems: 'center',
       justifySelf: 'end',
       padding: '6%',
-      border: '1px solid rgba(71, 71, 71, 0.5)',
       borderRadius: '5px',
       [theme.breakpoints.down(600)]: {
         justifySelf: 'center',
@@ -88,40 +75,78 @@ const useStyles = makeStyles((theme: Theme) =>
         marginTop: '5%',
       },
     },
-    avatarTitle: {
-      fontSize: '1.2em',
-    },
     username: {
       fontSize: '1.1em',
-    },
-    text: {
-      fontSize: '0.9em',
-      alignSelf: 'end',
-      color: '#474747',
     },
   })
 );
 
-const GitHubAccount = () => {
+const gitHubApiUrl = 'https://api.github.com/users';
+
+type FormProps = {
+  values: { [x: string]: string | string[] | { username: string; avatarUrl: string } };
+  setFieldValue: Function;
+};
+
+type GitHubData = {
+  login: string;
+  // eslint-disable-next-line camelcase
+  avatar_url: string;
+};
+
+const GitHubAccount = ({ values, setFieldValue }: FormProps) => {
   const classes = useStyles();
+
+  const [interval, setInterval] = useState(setTimeout(() => {}, 0));
+
+  const { data: github, error } = useSWR(
+    values.githubUsername ? `${gitHubApiUrl}/${values.githubUsername}` : null,
+    (url) => {
+      clearTimeout(interval);
+      return new Promise<GitHubData>((resolve, reject) => {
+        setInterval(
+          setTimeout(async () => {
+            try {
+              const res = await fetch(url);
+              if (!res.ok) {
+                throw new Error(res.statusText);
+              }
+              const data = await res.json();
+              setFieldValue('github', {
+                username: data.login,
+                avatarUrl: data.avatar_url,
+              });
+              resolve(data);
+            } catch (err) {
+              setFieldValue('github', {}, true);
+              reject(err);
+            }
+          }, 1000)
+        );
+      });
+    }
+  );
 
   return (
     <div className={classes.root}>
       <div className={classes.container}>
         <h1 className={classes.titlePage}>GitHub Account</h1>
-        <h2 className={classes.subtitlePage}>
-          Please provide your GitHub username and preview you avatar image
-        </h2>
+        <h2 className={classes.subtitlePage}>Enter Github username and verify your profile</h2>
         <div className={classes.infoContainer}>
           <div className={classes.inputsContainer}>
-            <TextInput label={githubUserName.label} name={githubUserName.name} />
-            <Button className={classes.button}>Validate Git</Button>
+            <TextInput
+              label={githubUserName.label}
+              name={githubUserName.name}
+              error={!!error}
+              helperText={!!error && githubModel.invalidErrorMsg}
+            />
           </div>
-          {/* <div className={classes.avatarPreview}>
-            <h1 className={classes.avatarTitle}>Avatar Preview</h1>
-            <PostAvatar name={userInfo.displayName} blog="test" />
-            <h2 className={classes.username}>{userInfo.displayName}</h2>
-          </div> */}
+          {!error && github && (
+            <div className={classes.avatarPreview}>
+              <PostAvatar name={github.login} blog={github.avatar_url} img={github.avatar_url} />
+              <h2 className={classes.username}>{github.login}</h2>
+            </div>
+          )}
         </div>
         <CheckBoxInput label="I declare that I’m the owner and the maintainer of this GitHub account" />
       </div>

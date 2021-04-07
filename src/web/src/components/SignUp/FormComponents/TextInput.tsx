@@ -19,6 +19,7 @@ const TextInput = (props: TextFieldProps) => {
   const classes = useStyles();
 
   const { helperText, ...rest } = props;
+  // TODO: Better type
   const [field, meta] = useField(props as any);
 
   const renderHelperText = () => (meta.touched && meta.error ? meta.error : helperText || '');
