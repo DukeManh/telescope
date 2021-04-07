@@ -83,11 +83,6 @@ const useStyles = makeStyles((theme) =>
       gridColumnEnd: '3',
       fontSize: '1em',
     },
-    text: {
-      fontSize: '0.9em',
-      alignSelf: 'end',
-      color: '#474747',
-    },
   })
 );
 
@@ -128,14 +123,11 @@ const DisplayName = () => {
           <Button className={classes.button}>Validate Name</Button>
         </InputContainer>
         <InputContainer>
-          <TextInput required label={firstName.label} name={firstName.name} />
+          <TextInput label={firstName.label} name={firstName.name} />
         </InputContainer>
         <InputContainer>
-          <TextInput required label={lastName.label} name={lastName.name} />
+          <TextInput label={lastName.label} name={lastName.name} />
         </InputContainer>
-        <div className={classes.text}>
-          <h3>Click NEXT to continue:</h3>
-        </div>
       </div>
     </div>
   );

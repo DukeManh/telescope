@@ -13,7 +13,7 @@ export default {
   lastName: {
     name: 'lastName',
     label: 'Last name',
-    requiredErrorMsg: 'First name is required',
+    requiredErrorMsg: 'Last name is required',
     invalidErrorMsg: 'Last name must contain 2-16 characters',
   },
   github: {

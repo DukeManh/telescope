@@ -88,19 +88,29 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       position: 'relative',
     },
-    formContainer: {},
     buttonsWrapper: {
+      margin: '0 auto',
+      width: '50%',
       display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     button: {
+      height: '4rem',
+      width: '40%',
       fontSize: '1.1em',
-      padding: '1em',
-      margin: '5px 10px',
+      padding: '0.7em',
+      margin: '5px',
       background: '#E0C05A',
       '&:hover': {
         color: 'black',
         background: '#EBD898',
       },
+    },
+    text: {
+      textAlign: 'center',
+      fontSize: '0.9em',
+      color: '#474747',
     },
   })
 );
@@ -108,6 +118,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const SignUpPage = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState<number>(0);
+  const currentSchema = formSchema[activeStep];
   const { user, login } = useAuth();
 
   if (!user) {
@@ -147,10 +158,15 @@ const SignUpPage = () => {
       <div className={classes.signUpContainer}>
         <h1 className={classes.title}>Telescope Account</h1>
         <Formik
-          onSubmit={(values) => {
-            console.log(JSON.stringify(values, null, 2));
+          onSubmit={(values, actions) => {
+            if (activeStep === 4) {
+              console.log(values);
+            }
+            handleNext();
+            actions.setTouched({});
+            actions.setSubmitting(false);
           }}
-          validationSchema={formSchema[activeStep]}
+          validationSchema={currentSchema}
           initialValues={{
             [firstName.name]: '',
             [lastName.name]: '',
@@ -165,34 +181,29 @@ const SignUpPage = () => {
             [feeds.name]: [] as Array<string>,
           }}
         >
-          <Form autoComplete="off" className={classes.infoContainer}>
-            {renderForm()}
-          </Form>
+          {({ values }) => (
+            <>
+              <Form autoComplete="off" className={classes.infoContainer}>
+                {renderForm()}
+                <div className={classes.text}>
+                  <h3>Click NEXT to continue</h3>
+                </div>
+                <div className={classes.buttonsWrapper}>
+                  {activeStep > 0 && (
+                    <Button className={classes.button} onClick={handlePrevious}>
+                      Previous
+                    </Button>
+                  )}
+                  {activeStep < 4 && (
+                    <Button className={classes.button} type="submit">
+                      {activeStep === 4 ? 'Confirm' : 'Next'}
+                    </Button>
+                  )}
+                </div>
+              </Form>
+            </>
+          )}
         </Formik>
-        <div className={classes.formContainer}>
-          <div className={classes.buttonsWrapper}>
-            {activeStep > 0 && (
-              <Button className={classes.button} onClick={handlePrevious}>
-                Previous
-              </Button>
-            )}
-            {activeStep === 0 && (
-              <Button className={classes.button} onClick={handleNext}>
-                Start
-              </Button>
-            )}
-            {activeStep < 4 && activeStep > 0 && (
-              <Button className={classes.button} onClick={handleNext}>
-                Next
-              </Button>
-            )}
-            {activeStep === 4 && (
-              <Button className={classes.button} type="submit">
-                Confirm
-              </Button>
-            )}
-          </div>
-        </div>
       </div>
     </div>
   );

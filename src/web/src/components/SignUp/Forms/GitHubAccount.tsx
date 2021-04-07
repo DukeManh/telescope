@@ -146,9 +146,6 @@ const GitHubAccount = () => {
             />
           </FormGroup>
         </FormControl> */}
-        <div className={classes.text}>
-          <h3>Click NEXT to continue</h3>
-        </div>
       </div>
     </div>
   );
