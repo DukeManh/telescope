@@ -189,29 +189,7 @@ const RSSFeeds = () => {
             </div>
           </div>
         </div>
-        {/* <div className={classes.agreeMessage}>
-          <FormControl required component="fieldset">
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={agreement}
-                    name="blogOwnership"
-                    onChange={(e) => handleChange(e)}
-                  />
-                }
-                label={
-                  <h1 className={classes.formControlLabel}>
-                    I declare that I am the owner and the maintainer of this Blog
-                  </h1>
-                }
-              />
-            </FormGroup>
-          </FormControl>
-        </div> */}
-        <div className={classes.text}>
-          <h3>Click NEXT to continue</h3>
-        </div>
+        <CheckBoxInput label="I declare that I am the owner and the maintainer of this Blog" />
       </div>
     </div>
   );

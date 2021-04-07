@@ -1,4 +1,4 @@
-import { useField } from 'formik';
+import { useField, FieldHookConfig } from 'formik';
 import TextField, { TextFieldProps } from '@material-ui/core/TextField';
 import { createStyles, makeStyles } from '@material-ui/core';
 
@@ -15,12 +15,11 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const TextInput = (props: TextFieldProps) => {
+const TextInput = (props: TextFieldProps & FieldHookConfig<string>) => {
   const classes = useStyles();
 
   const { helperText, ...rest } = props;
-  // TODO: Better type
-  const [field, meta] = useField(props as any);
+  const [field, meta] = useField(props);
 
   const renderHelperText = () => (meta.touched && meta.error ? meta.error : helperText || '');
 

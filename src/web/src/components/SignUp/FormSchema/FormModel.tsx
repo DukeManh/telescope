@@ -16,6 +16,10 @@ export default {
     requiredErrorMsg: 'Last name is required',
     invalidErrorMsg: 'Last name must contain 2-16 characters',
   },
+  email: {
+    name: 'email',
+    label: 'Email',
+  },
   github: {
     name: 'github',
     label: 'Github Data`',
@@ -25,6 +29,11 @@ export default {
     name: 'githubUsername',
     label: 'Github username',
     requiredErrorMsg: 'Github account is required',
+  },
+  githubOwnership: {
+    name: 'githubOwnership',
+    label: 'I declare that I’m the owner and the maintainer of this GitHub account',
+    invalidErrorMsg: 'You must be the owner of this account',
   },
   blogUrl: {
     name: 'blogUrl',
@@ -37,8 +46,9 @@ export default {
     label: 'RSS Feeds',
     invalidErrorMsg: 'RSS feeds missing',
   },
-  email: {
-    name: 'email',
-    label: 'Email',
+  blogOwnership: {
+    name: 'githubUsername',
+    label: 'I declare that I’m the owner and the maintainer of this blog account',
+    invalidErrorMsg: 'You must be the owner of this account',
   },
 };

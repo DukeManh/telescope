@@ -1,8 +1,10 @@
 import { createStyles, makeStyles } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { useField, FieldHookConfig } from 'formik';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -11,32 +13,34 @@ const useStyles = makeStyles(() =>
       color: 'black',
     },
     formControlLabel: {
-      fontSize: '.9em',
-      height: '10px',
+      fontSize: '1em',
       color: '#474747',
     },
   })
 );
 
-type Props = {
+type CheckboxProps = {
+  name: string;
   label: string;
 };
 
-const CheckBoxInput = ({ label }: Props) => {
+const CheckBoxInput = (props: CheckboxProps) => {
   const classes = useStyles();
 
+  const { label, name, ...rest } = props;
+
+  const [field, meta] = useField(props);
+
   return (
-    <FormControl required component="fieldset">
+    <FormControl {...rest} error={!!meta.error && meta.touched}>
       <FormGroup>
         <FormControlLabel
-          control={<Checkbox checked={false} name="githubOwnership" />}
-          label={
-            <h1 className={classes.formControlLabel}>
-              I declare that I’m the owner and the maintainer of this GitHub account
-            </h1>
-          }
+          control={<Checkbox {...field} />}
+          label={<span className={classes.formControlLabel}>{label}</span>}
+          name={name}
         />
       </FormGroup>
+      <FormHelperText>{meta.error && meta.touched ? meta.error : ''}</FormHelperText>
     </FormControl>
   );
 };

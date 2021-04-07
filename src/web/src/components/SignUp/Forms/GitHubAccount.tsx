@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
 import PostAvatar from '../../Posts/PostAvatar';
 
 import useSWRWithTimeout from '../../../hooks/use-swr-with-timeout';
 import formModels from '../FormSchema/FormModel';
 import { TextInput, CheckBoxInput } from '../FormComponents';
 
-const { githubUserName, github: githubModel } = formModels;
+const { githubUserName, github: githubModel, githubOwnership } = formModels;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -136,7 +137,7 @@ const GitHubAccount = ({ values, setFieldValue }: FormProps) => {
             </div>
           )}
         </div>
-        <CheckBoxInput label="I declare that I’m the owner and the maintainer of this GitHub account" />
+        <CheckBoxInput label={githubOwnership.label} name={githubOwnership.name} />
       </div>
     </div>
   );
