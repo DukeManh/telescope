@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import { useEffect } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import { connect } from 'formik';
 import PostAvatar from '../../Posts/PostAvatar';
 
 import useSWRWithTimeout from '../../../hooks/use-swr-with-timeout';
@@ -85,19 +86,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const gitHubApiUrl = 'https://api.github.com/users';
 
-type FormikProps = {
-  values: SignUpForm;
-  setFieldValue: Function;
-};
-
 type GitHubData = {
   login: string;
   avatar_url: string;
 };
 
-const GitHubAccount = ({ values, setFieldValue }: FormikProps) => {
+const GitHubAccount = connect<{}, SignUpForm>((props) => {
   const classes = useStyles();
 
+  const { values, setFieldValue } = props.formik;
+
+  // We fetch user's github profile 1000ms after input change
   const { data: github, error } = useSWRWithTimeout<GitHubData>(
     values.githubUsername ? `${gitHubApiUrl}/${values.githubUsername}` : null,
     1000
@@ -126,6 +125,7 @@ const GitHubAccount = ({ values, setFieldValue }: FormikProps) => {
             <TextInput
               label={githubUsername.label}
               name={githubUsername.name}
+              error={!!error}
               helperText={!!error && githubModel.invalidErrorMsg}
             />
           </div>
@@ -144,6 +144,6 @@ const GitHubAccount = ({ values, setFieldValue }: FormikProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default GitHubAccount;

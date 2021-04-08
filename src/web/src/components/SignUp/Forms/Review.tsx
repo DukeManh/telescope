@@ -1,6 +1,8 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import Spinner from '../../Spinner';
-// import PostAvatar from '../Posts/PostAvatar';
+import { connect } from 'formik';
+import PostAvatar from '../../Posts/PostAvatar';
+
+import { SignUpForm } from '../../../interfaces';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,57 +92,50 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Review = () => {
+const Review = connect<{}, SignUpForm>((props) => {
   const classes = useStyles();
-  const loading = false;
-  const rssExample = ['www.test1.feed.com', 'www.test2.feed.com', 'www.test3.feed.com'];
+
+  const { feeds, displayName, firstName, lastName, email, github, blogUrl } = props.formik.values;
 
   return (
     <div className={classes.root}>
-      {loading ? (
-        <>
-          <h1>Processing your information.</h1>
-          <Spinner />
-        </>
-      ) : (
-        <div className={classes.container}>
-          <h1 className={classes.titlePage}>Review your Information</h1>
-          <div className={classes.contentContainer}>
-            {/* <div className={classes.avatar}>
-              <PostAvatar name={userInfo.displayName} blog="test" />
-              <h2>
-                Display Name:
-                <p>{userInfo.displayName}</p>
-              </h2>
-            </div> */}
-            <div className={classes.senecaBlogInfo}>
-              <h3>From seneca:</h3>
-              <p>Full Name: test name example</p>
-              <p>Email : test@example.com</p>
-              <h3>Blog URL:</h3>
-              <p>exampleBlog.com</p>
+      <div className={classes.container}>
+        <h1 className={classes.titlePage}>Review your Information</h1>
+        <div className={classes.contentContainer}>
+          <div className={classes.avatar}>
+            <PostAvatar name={displayName} blog={blogUrl} img={github.avatarUrl} />
+            <h2>
+              Display Name:
+              <p>{displayName}</p>
+            </h2>
+          </div>
+          <div className={classes.senecaBlogInfo}>
+            <h3>From seneca:</h3>
+            <p>Full Name: {displayName || `${firstName} ${lastName}`}</p>
+            <p>Email : {email}</p>
+            <h3>Blog URL:</h3>
+            <p>{blogUrl}</p>
+          </div>
+          <div>
+            <div className={classes.gitHubInfo}>
+              <h3>GitHub Account:</h3>
+              <p>{github.username}</p>
             </div>
-            <div>
-              <div className={classes.gitHubInfo}>
-                <h3>GitHub Account:</h3>
-                <p>GitHubName</p>
-              </div>
-            </div>
-            <div>
-              <h3 className={classes.titleRss}>Blog RSS:</h3>
-              <div className={classes.blogRss}>
-                <div>
-                  {rssExample.map((rss) => (
-                    <p key={rss}>{rss}</p>
-                  ))}
-                </div>
+          </div>
+          <div>
+            <h3 className={classes.titleRss}>Blog RSS:</h3>
+            <div className={classes.blogRss}>
+              <div>
+                {feeds.map((rss) => (
+                  <p key={rss}>{rss}</p>
+                ))}
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
-};
+});
 
 export default Review;

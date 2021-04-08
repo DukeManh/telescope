@@ -1,10 +1,11 @@
 import { ReactNode } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import useAuth from '../../../hooks/use-auth';
+import { connect } from 'formik';
 
 import formModels from '../Schema/FormModel';
 import { TextInput } from '../FormFields';
+import { SignUpForm } from '../../../interfaces';
 
 const { firstName, lastName, displayName, email } = formModels;
 
@@ -114,36 +115,35 @@ const InputContainer = ({ children }: Props) => {
   return <div className={classes.inputContainer}>{children}</div>;
 };
 
-const DisplayName = () => {
+const DisplayName = connect<{}, SignUpForm>((props) => {
   const classes = useStyles();
-  const { user } = useAuth();
 
-  // TODO Check with users service if displayName is taken
+  // TODO Check if displayName is taken
   // Currently there's no `/users/:displayName` endpoint
 
-  if (!user) return null;
+  const { values } = props.formik;
 
   return (
     <div className={classes.root}>
       <div className={classes.container}>
         <div className={classes.helloMessage}>
-          <h1>Hello {user.name}</h1>
+          <h1>Hello {values.displayName}</h1>
         </div>
         <div className={classes.userInfo}>
           <h2 className={classes.userInfoLabel}>
             The following information is what we already have:
           </h2>
           <h2>
-            <b>Full Name: </b>
-            <span>{user.name}</span>
+            <b>Display name: </b>
+            <span>{values.displayName}</span>
           </h2>
           <h2>
             <b>Email: </b>
-            <span>{user.email}</span>
+            <span>{values.email}</span>
           </h2>
         </div>
         <InputContainer>
-          <TextInput disabled name={email.name} value={user.email} />
+          <TextInput disabled name={email.name} value={values.email} />
         </InputContainer>
         <InputContainer>
           <TextInput
@@ -162,6 +162,6 @@ const DisplayName = () => {
       </div>
     </div>
   );
-};
+});
 
 export default DisplayName;

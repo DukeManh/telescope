@@ -18,11 +18,13 @@ const useStyles = makeStyles(() =>
 const TextInput = (props: TextFieldProps & FieldHookConfig<string>) => {
   const classes = useStyles();
 
-  const { helperText, ...rest } = props;
+  const { helperText, error, ...rest } = props;
   const [field, meta] = useField(props);
 
-  const renderHelperText = () => (meta.touched && meta.error ? meta.error : helperText || '');
+  const renderHelperText = () =>
+    error || (meta.touched && meta.error) ? meta.error || helperText : '';
 
+  console.log(error, renderHelperText());
   return (
     <TextField
       InputProps={{
@@ -37,7 +39,7 @@ const TextInput = (props: TextFieldProps & FieldHookConfig<string>) => {
       }}
       fullWidth
       type="text"
-      error={meta.touched && !!meta.error}
+      error={error || (meta.touched && !!meta.error)}
       helperText={renderHelperText()}
       {...field}
       {...rest}

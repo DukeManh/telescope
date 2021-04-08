@@ -118,11 +118,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type FormikProps = {
-  values: SignUpForm;
-  setFieldValue: Function;
-  errors: { [field: string]: string };
-};
+// type FormProps = {
+//   values: SignUpForm;
+//   setFieldValue: Function;
+//   errors: { [field: string]: string };
+// };
 
 const SignUpPage = () => {
   const classes = useStyles();
@@ -152,16 +152,16 @@ const SignUpPage = () => {
     }
   };
 
-  const renderForm = ({ values, setFieldValue, errors }: FormikProps) => {
+  const renderForm = () => {
     switch (activeStep) {
       case 0:
         return <Overview />;
       case 1:
         return <BasicInfo />;
       case 2:
-        return <GitHubAccount values={values} setFieldValue={setFieldValue} />;
+        return <GitHubAccount />;
       case 3:
-        return <RSSFeeds values={values} setFieldValue={setFieldValue} errors={errors} />;
+        return <RSSFeeds />;
       case 4:
         return <Review />;
       default:
@@ -191,16 +191,16 @@ const SignUpPage = () => {
                 username: '',
                 avatarUrl: '',
               },
-              [blogUrl.name]: 'https:://',
+              [blogUrl.name]: 'https://',
               [feeds.name]: [] as Array<string>,
               [blogOwnership.name]: false,
             } as SignUpForm
           }
         >
-          {(props) => (
+          {() => (
             <>
               <Form autoComplete="off" className={classes.infoContainer}>
-                {renderForm(props)}
+                {renderForm()}
                 <div className={classes.text}>
                   <h3>Click NEXT to continue</h3>
                 </div>

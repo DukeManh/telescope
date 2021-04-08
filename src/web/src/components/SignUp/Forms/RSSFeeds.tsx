@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Button, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { connect } from 'formik';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import formModels from '../Schema/FormModel';
 import { TextInput, CheckBoxInput } from '../FormFields';
 import { feedDiscoveryServiceUrl } from '../../../config';
+import formModels from '../Schema/FormModel';
 import { SignUpForm } from '../../../interfaces';
 
 const { blogUrl, blogOwnership } = formModels;
@@ -134,15 +135,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type FormikProps = {
-  values: SignUpForm;
-  setFieldValue: Function;
-  errors: SignUpForm;
-};
-
-const RSSFeeds = ({ values, setFieldValue, errors }: FormikProps) => {
+const RSSFeeds = connect<{}, SignUpForm>((props) => {
   const classes = useStyles();
+
   const [feedUrls, setFeedUrls] = useState<Array<string>>([]);
+
+  const { values, errors, setFieldValue } = props.formik;
+
+  const [blogUrlError, setBlogUrlError] = useState<string>('');
 
   const validateBlog = async () => {
     if (!errors.blogUrl && feedDiscoveryServiceUrl) {
@@ -161,18 +161,21 @@ const RSSFeeds = ({ values, setFieldValue, errors }: FormikProps) => {
         }
 
         const res = await response.json();
+        setBlogUrlError('');
         setFeedUrls(res.feedUrls);
       } catch (err) {
-        setFieldValue([]);
+        setBlogUrlError(`Failed to fetch RSS feed at ${values.blogUrl}`);
+        setFeedUrls([], true);
       }
     } else {
-      setFeedUrls([]);
+      setBlogUrlError('');
+      setFeedUrls([], true);
     }
   };
 
   const handleCheck = (url: string) => {
     const selectedFeeds = values.feeds.includes(url)
-      ? values.feeds.filter((val) => val !== url)
+      ? values.feeds.filter((val: string) => val !== url)
       : [...values.feeds, url];
 
     setFieldValue('feeds', selectedFeeds, true);
@@ -195,7 +198,8 @@ const RSSFeeds = ({ values, setFieldValue, errors }: FormikProps) => {
             <TextInput
               name={blogUrl.name}
               label={blogUrl.label}
-              helperText="Verify your Blog URL"
+              helperText={blogUrlError || 'Validate your Blog URL'}
+              error={!!blogUrlError}
             />
             <Button className={classes.button} onClick={validateBlog}>
               Validate Blog
@@ -237,6 +241,6 @@ const RSSFeeds = ({ values, setFieldValue, errors }: FormikProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default RSSFeeds;
