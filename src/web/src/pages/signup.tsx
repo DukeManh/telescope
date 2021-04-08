@@ -2,7 +2,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { useState } from 'react';
 
 import Button from '@material-ui/core/Button';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 
 import useAuth from '../hooks/use-auth';
 import Overview from '../components/SignUp/Forms/Overview';
@@ -142,6 +142,16 @@ const SignUpPage = () => {
     setActiveStep(activeStep - 1);
   };
 
+  const handleSubmit = (values: SignUpForm, actions: FormikHelpers<SignUpForm>) => {
+    if (activeStep === 4) {
+      console.log(values);
+    } else {
+      handleNext();
+      actions.setTouched({});
+      actions.setSubmitting(false);
+    }
+  };
+
   const renderForm = ({ values, setFieldValue, errors }: FormikProps) => {
     switch (activeStep) {
       case 0:
@@ -167,14 +177,7 @@ const SignUpPage = () => {
       <div className={classes.signUpContainer}>
         <h1 className={classes.title}>Telescope Account</h1>
         <Formik
-          onSubmit={(values, actions) => {
-            if (activeStep === 4) {
-              console.log(values);
-            }
-            handleNext();
-            actions.setTouched({});
-            actions.setSubmitting(false);
-          }}
+          onSubmit={handleSubmit}
           validationSchema={currentSchema}
           initialValues={
             {
