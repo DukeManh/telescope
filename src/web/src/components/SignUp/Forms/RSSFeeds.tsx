@@ -165,11 +165,11 @@ const RSSFeeds = connect<{}, SignUpForm>((props) => {
         setFeedUrls(res.feedUrls);
       } catch (err) {
         setBlogUrlError(`Failed to fetch RSS feed at ${values.blogUrl}`);
-        setFeedUrls([], true);
+        setFeedUrls([]);
       }
     } else {
       setBlogUrlError('');
-      setFeedUrls([], true);
+      setFeedUrls([]);
     }
   };
 

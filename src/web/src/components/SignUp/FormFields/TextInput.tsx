@@ -24,7 +24,6 @@ const TextInput = (props: TextFieldProps & FieldHookConfig<string>) => {
   const renderHelperText = () =>
     error || (meta.touched && meta.error) ? meta.error || helperText : '';
 
-  console.log(error, renderHelperText());
   return (
     <TextField
       InputProps={{
