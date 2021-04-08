@@ -6,7 +6,7 @@ const {
   firstName,
   lastName,
   displayName,
-  githubUserName,
+  githubUsername,
   github,
   githubOwnership,
   feeds,
@@ -15,15 +15,15 @@ const {
 } = formModels;
 
 const validateLength = (min: number, max: number) => (val: string | undefined): boolean =>
-  val !== undefined && val.length >= min && val.length <= max;
+  !!val && val.length >= min && val.length <= max;
 
 const validateCheckBox = (val: boolean | undefined) => !!val;
 
+// Each signup step has one validation schema
 export default [
   // First step has no validation logic
   Yup.object().shape({}),
 
-  // firstName, lastName, and displayName schemas
   Yup.object().shape({
     [firstName.name]: Yup.string()
       .required(`${firstName.requiredErrorMsg}`)
@@ -34,9 +34,8 @@ export default [
     [displayName.name]: Yup.string().default(''),
   }),
 
-  // Github username and github data schema
   Yup.object().shape({
-    [githubUserName.name]: Yup.string().required(`${githubUserName.requiredErrorMsg}`),
+    [githubUsername.name]: Yup.string().required(`${githubUsername.requiredErrorMsg}`),
     [github.name]: Yup.object()
       .shape({
         username: Yup.string().required(),
@@ -49,10 +48,10 @@ export default [
       validateCheckBox
     ),
   }),
-  // Blog URL and RSS feeds
+
   Yup.object().shape({
     [blogUrl.name]: Yup.string().url().required(`${blogUrl.requiredErrorMsg}`),
-    [feeds.name]: Yup.array().of(Yup.string()).min(1, feeds.invalidErrorMsg),
+    [feeds.name]: Yup.array().of(Yup.string()).min(1, feeds.requiredErrorMsg),
     [blogOwnership.name]: Yup.boolean().test(
       'agreed',
       blogOwnership.invalidErrorMsg,

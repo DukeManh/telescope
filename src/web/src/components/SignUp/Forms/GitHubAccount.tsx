@@ -1,13 +1,14 @@
+/* eslint-disable camelcase */
 import { useEffect } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import Checkbox from '@material-ui/core/Checkbox';
 import PostAvatar from '../../Posts/PostAvatar';
 
 import useSWRWithTimeout from '../../../hooks/use-swr-with-timeout';
-import formModels from '../FormSchema/FormModel';
-import { TextInput, CheckBoxInput } from '../FormComponents';
+import formModels from '../Schema/FormModel';
+import { TextInput, CheckBoxInput } from '../FormFields';
+import { SignUpForm } from '../../../interfaces';
 
-const { githubUserName, github: githubModel, githubOwnership } = formModels;
+const { githubUsername, github: githubModel, githubOwnership } = formModels;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -84,18 +85,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const gitHubApiUrl = 'https://api.github.com/users';
 
-type FormProps = {
-  values: { [x: string]: string | string[] | { username: string; avatarUrl: string } };
+type FormikProps = {
+  values: SignUpForm;
   setFieldValue: Function;
 };
 
 type GitHubData = {
   login: string;
-  // eslint-disable-next-line camelcase
   avatar_url: string;
 };
 
-const GitHubAccount = ({ values, setFieldValue }: FormProps) => {
+const GitHubAccount = ({ values, setFieldValue }: FormikProps) => {
   const classes = useStyles();
 
   const { data: github, error } = useSWRWithTimeout<GitHubData>(
@@ -124,9 +124,8 @@ const GitHubAccount = ({ values, setFieldValue }: FormProps) => {
         <div className={classes.infoContainer}>
           <div className={classes.inputsContainer}>
             <TextInput
-              label={githubUserName.label}
-              name={githubUserName.name}
-              error={!!error}
+              label={githubUsername.label}
+              name={githubUsername.name}
               helperText={!!error && githubModel.invalidErrorMsg}
             />
           </div>
@@ -137,7 +136,11 @@ const GitHubAccount = ({ values, setFieldValue }: FormProps) => {
             </div>
           )}
         </div>
-        <CheckBoxInput label={githubOwnership.label} name={githubOwnership.name} />
+        <CheckBoxInput
+          label={githubOwnership.label}
+          name={githubOwnership.name}
+          checked={values.githubOwnership}
+        />
       </div>
     </div>
   );

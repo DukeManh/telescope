@@ -1,5 +1,6 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+
 import useAuth from '../../../hooks/use-auth';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -97,7 +98,7 @@ const Overview = () => {
         <div className={classes.text}>
           <h3>Click Next to complete your Telescope account</h3>
           <h4 className={classes.helpStartText}>
-            * After clicking START you will be prompted to login to your Seneca account{' '}
+            * After clicking Next you will be prompted to login to your Seneca account{' '}
           </h4>
         </div>
       </div>

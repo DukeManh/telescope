@@ -1,10 +1,10 @@
 import { createStyles, makeStyles } from '@material-ui/core';
+import { useField } from 'formik';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { useField, FieldHookConfig } from 'formik';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -22,20 +22,20 @@ const useStyles = makeStyles(() =>
 type CheckboxProps = {
   name: string;
   label: string;
+  checked: boolean;
 };
 
 const CheckBoxInput = (props: CheckboxProps) => {
   const classes = useStyles();
 
-  const { label, name, ...rest } = props;
-
+  const { label, name, checked, ...rest } = props;
   const [field, meta] = useField(props);
 
   return (
     <FormControl {...rest} error={!!meta.error && meta.touched}>
       <FormGroup>
         <FormControlLabel
-          control={<Checkbox {...field} />}
+          control={<Checkbox {...field} checked={checked} />}
           label={<span className={classes.formControlLabel}>{label}</span>}
           name={name}
         />

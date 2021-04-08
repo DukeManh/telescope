@@ -3,8 +3,8 @@ import { createStyles, makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import useAuth from '../../../hooks/use-auth';
 
-import formModels from '../FormSchema/FormModel';
-import { TextInput } from '../FormComponents';
+import formModels from '../Schema/FormModel';
+import { TextInput } from '../FormFields';
 
 const { firstName, lastName, displayName, email } = formModels;
 
@@ -117,6 +117,9 @@ const InputContainer = ({ children }: Props) => {
 const DisplayName = () => {
   const classes = useStyles();
   const { user } = useAuth();
+
+  // TODO Check with users service if displayName is taken
+  // Currently there's no `/users/:displayName` endpoint
 
   if (!user) return null;
 

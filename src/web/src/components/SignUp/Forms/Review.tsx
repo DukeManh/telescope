@@ -137,9 +137,6 @@ const Review = () => {
               </div>
             </div>
           </div>
-          <div className={classes.text}>
-            <h3>Click CONFIRM to finish</h3>
-          </div>
         </div>
       )}
     </div>

@@ -25,7 +25,7 @@ export default {
     label: 'Github Data`',
     invalidErrorMsg: 'Invalid GitHub profile',
   },
-  githubUserName: {
+  githubUsername: {
     name: 'githubUsername',
     label: 'Github username',
     requiredErrorMsg: 'Github account is required',
@@ -44,10 +44,10 @@ export default {
   feeds: {
     name: 'feeds',
     label: 'RSS Feeds',
-    invalidErrorMsg: 'RSS feeds missing',
+    requiredErrorMsg: 'You must select at least one RSS url',
   },
   blogOwnership: {
-    name: 'githubUsername',
+    name: 'blogOwnership',
     label: 'I declare that I’m the owner and the maintainer of this blog account',
     invalidErrorMsg: 'You must be the owner of this account',
   },

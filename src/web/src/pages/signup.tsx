@@ -2,7 +2,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { useState } from 'react';
 
 import Button from '@material-ui/core/Button';
-import { Formik, Form, FormikProps } from 'formik';
+import { Formik, Form } from 'formik';
 
 import useAuth from '../hooks/use-auth';
 import Overview from '../components/SignUp/Forms/Overview';
@@ -12,18 +12,21 @@ import RSSFeeds from '../components/SignUp/Forms/RSSFeeds';
 import Review from '../components/SignUp/Forms/Review';
 import DynamicImage from '../components/DynamicImage';
 
-import formModels from '../components/SignUp/FormSchema/FormModel';
-import formSchema from '../components/SignUp/FormSchema/FormSchema';
+import { SignUpForm } from '../interfaces';
+import formModels from '../components/SignUp/Schema/FormModel';
+import formSchema from '../components/SignUp/Schema/FormSchema';
 
 const {
   firstName,
   lastName,
   displayName,
-  githubUserName,
+  githubUsername,
   github,
+  githubOwnership,
   blogUrl,
   feeds,
   email,
+  blogOwnership,
 } = formModels;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -115,9 +118,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type FormProps = {
-  values: { [x: string]: string | string[] | { username: string; avatarUrl: string } };
+type FormikProps = {
+  values: SignUpForm;
   setFieldValue: Function;
+  errors: { [field: string]: string };
 };
 
 const SignUpPage = () => {
@@ -138,7 +142,7 @@ const SignUpPage = () => {
     setActiveStep(activeStep - 1);
   };
 
-  const renderForm = ({ values, setFieldValue }: FormProps) => {
+  const renderForm = ({ values, setFieldValue, errors }: FormikProps) => {
     switch (activeStep) {
       case 0:
         return <Overview />;
@@ -147,7 +151,7 @@ const SignUpPage = () => {
       case 2:
         return <GitHubAccount values={values} setFieldValue={setFieldValue} />;
       case 3:
-        return <RSSFeeds />;
+        return <RSSFeeds values={values} setFieldValue={setFieldValue} errors={errors} />;
       case 4:
         return <Review />;
       default:
@@ -172,19 +176,23 @@ const SignUpPage = () => {
             actions.setSubmitting(false);
           }}
           validationSchema={currentSchema}
-          initialValues={{
-            [firstName.name]: '',
-            [lastName.name]: '',
-            [displayName.name]: '',
-            [email.name]: user?.email || '',
-            [githubUserName.name]: '',
-            [github.name]: {
-              username: '',
-              avatarUrl: '',
-            },
-            [blogUrl.name]: 'https:://',
-            [feeds.name]: [] as Array<string>,
-          }}
+          initialValues={
+            {
+              [firstName.name]: '',
+              [lastName.name]: '',
+              [displayName.name]: '',
+              [email.name]: user?.email || '',
+              [githubUsername.name]: '',
+              [githubOwnership.name]: false,
+              [github.name]: {
+                username: '',
+                avatarUrl: '',
+              },
+              [blogUrl.name]: 'https:://',
+              [feeds.name]: [] as Array<string>,
+              [blogOwnership.name]: false,
+            } as SignUpForm
+          }
         >
           {(props) => (
             <>

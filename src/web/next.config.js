@@ -13,7 +13,14 @@ const dotenv = require('dotenv');
 const loadApiUrlFromEnv = (envFile) => dotenv.config({ path: envFile });
 
 // ENV Variables we need to forward to next by prefix with NEXT_PUBLIC_*
-const envVarsToForward = ['API_URL', 'IMAGE_URL', 'POSTS_URL', 'AUTH_URL'];
+const envVarsToForward = [
+  'API_URL',
+  'IMAGE_URL',
+  'POSTS_URL',
+  'AUTH_URL',
+  'FEED_DISCOVERY_URL',
+  'USERS_URL',
+];
 
 // Copy an existing ENV Var so it's visible to next: API_URL -> NEXT_PUBLIC_API_URL
 const forwardToNext = (envVar) => {

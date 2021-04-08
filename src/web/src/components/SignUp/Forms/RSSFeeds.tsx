@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, createStyles, makeStyles, Theme } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -6,10 +6,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import formModels from '../FormSchema/FormModel';
-import { TextInput, CheckBoxInput } from '../FormComponents';
+import formModels from '../Schema/FormModel';
+import { TextInput, CheckBoxInput } from '../FormFields';
+import { feedDiscoveryServiceUrl } from '../../../config';
+import { SignUpForm } from '../../../interfaces';
 
-const { blogUrl } = formModels;
+const { blogUrl, blogOwnership } = formModels;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -91,7 +93,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'grid',
     },
     infoRSSContainer: {
-      border: '1px solid rgba(71, 71, 71, 0.5)',
       minHeight: '120px',
       maxHeight: '120px',
       width: '100%',
@@ -125,71 +126,114 @@ const useStyles = makeStyles((theme: Theme) =>
         alignSelf: 'end',
       },
     },
+    formControlLabel: {
+      fontSize: '.9em',
+      height: '10px',
+      color: '#474747',
+    },
   })
 );
 
-const RSSFeeds = () => {
-  const classes = useStyles();
-  const [validateBlog, setValidateBlog] = useState(false);
-  const [validateConfirm, setValidateConfirm] = useState(false);
-  const rssExample = ['www.test1.feed.com', 'www.test2.feed.com', 'www.test3.feed.com'];
+type FormikProps = {
+  values: SignUpForm;
+  setFieldValue: Function;
+  errors: SignUpForm;
+};
 
-  const dumbHandleChange = () => {
-    setValidateBlog(!validateBlog);
-    setValidateConfirm(!validateConfirm);
-    console.log(validateBlog);
+const RSSFeeds = ({ values, setFieldValue, errors }: FormikProps) => {
+  const classes = useStyles();
+  const [feedUrls, setFeedUrls] = useState<Array<string>>([]);
+
+  const validateBlog = async () => {
+    if (!errors.blogUrl && feedDiscoveryServiceUrl) {
+      try {
+        const response = await fetch(feedDiscoveryServiceUrl, {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            blogUrl: values.blogUrl,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+
+        const res = await response.json();
+        setFeedUrls(res.feedUrls);
+      } catch (err) {
+        setFieldValue([]);
+      }
+    } else {
+      setFeedUrls([]);
+    }
   };
+
+  const handleCheck = (url: string) => {
+    const selectedFeeds = values.feeds.includes(url)
+      ? values.feeds.filter((val) => val !== url)
+      : [...values.feeds, url];
+
+    setFieldValue('feeds', selectedFeeds, true);
+  };
+
+  useEffect(() => {
+    validateBlog();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={classes.root}>
       <div className={classes.container}>
         <h1 className={classes.blogPageTitle}>Blog and RSS</h1>
         <h2 className={classes.helpText}>
-          Please enter your blog URL and select the RSS that you want to use in Telescope ecosystem.
+          Enter your blog URL and select the RSS you want to use in Telescope ecosystem.
         </h2>
         <div className={classes.infoContainer}>
           <div className={classes.inputsContainer}>
             <TextInput
-              required
               name={blogUrl.name}
               label={blogUrl.label}
               helperText="Verify your Blog URL"
             />
-            <Button className={classes.button} onClick={dumbHandleChange}>
+            <Button className={classes.button} onClick={validateBlog}>
               Validate Blog
             </Button>
           </div>
           <div className={classes.RssButtonContainer}>
             <div className={classes.infoRSSContainer}>
-              {validateBlog ? (
+              {feedUrls.length ? (
                 <FormControl required component="fieldset">
-                  <FormHelperText className={classes.helpMessage}>
-                    *You must select at least one RSS
-                  </FormHelperText>
                   <FormGroup>
-                    {rssExample.map((rss) => (
+                    {feedUrls.map((url) => (
                       <FormControlLabel
-                        key={rss}
-                        control={<Checkbox checked name={rss} onChange={dumbHandleChange} />}
-                        label={<h1>{rss}</h1>}
+                        key={url}
+                        control={
+                          <Checkbox
+                            checked={values.feeds.includes(url)}
+                            onChange={() => handleCheck(url)}
+                          />
+                        }
+                        label={<h1 className={classes.formControlLabel}>{url}</h1>}
                       />
                     ))}
                   </FormGroup>
+                  <FormHelperText className={classes.helpMessage} error>
+                    {errors.feeds || ''}
+                  </FormHelperText>
                 </FormControl>
               ) : (
-                <h3 className={classes.noBlogMessage}>Please validate your blog</h3>
-              )}
-            </div>
-            <div className={classes.RssButtonWrapper}>
-              {validateConfirm === true && (
-                <Button className={classes.RssButton} onClick={dumbHandleChange}>
-                  Confirm RSS
-                </Button>
+                <h3 className={classes.noBlogMessage}>Please validate your blog URL</h3>
               )}
             </div>
           </div>
         </div>
-        <CheckBoxInput label="I declare that I am the owner and the maintainer of this Blog" />
+        <CheckBoxInput
+          label={blogOwnership.label}
+          name={blogOwnership.name}
+          checked={values.blogOwnership}
+        />
       </div>
     </div>
   );
