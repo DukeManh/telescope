@@ -8,6 +8,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   searchPage: {
     backgroundColor: theme.palette.background.default,
     minHeight: '100vh',
+    transition:
+      'color 0.1s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   },
   anchor: {
     position: 'absolute',

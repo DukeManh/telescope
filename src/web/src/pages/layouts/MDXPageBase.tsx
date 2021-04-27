@@ -25,10 +25,11 @@ const useStyles = makeStyles((theme) => {
       [theme.breakpoints.down(1024)]: {
         maxWidth: 'none',
       },
+      transition:
+        'color 0.1s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       '& h1': {
         color: theme.palette.text.secondary,
         fontSize: 24,
-        transition: 'color 1s',
         padding: '2vh 22vw',
         [theme.breakpoints.down(1024)]: {
           padding: '1vh 8vw',
@@ -38,7 +39,6 @@ const useStyles = makeStyles((theme) => {
       '& h2': {
         color: theme.palette.text.secondary,
         fontSize: 20,
-        transition: 'color 1s',
         padding: '2vh 22vw',
         [theme.breakpoints.down(1024)]: {
           padding: '1vh 8vw',
